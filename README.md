@@ -4,13 +4,13 @@ A lightweight Windows archive extractor with zero runtime dependencies.
 
 ## Overview
 
-AirZip is a standalone archive extractor built with raw Win32 C++ and 7-Zip's COM interfaces. It ships as a single 2.0 MB executable with no managed runtime, .NET, or external dependencies beyond Windows system DLLs.
+AirZip is a standalone archive extractor built with raw Win32 C++ and 7-Zip's COM interfaces. It ships as a single 2.1 MB executable with no managed runtime, .NET, or external dependencies beyond Windows system DLLs.
 
 Originally developed as a .NET 8 WinForms application (7.4 MB, requiring the .NET 8 Desktop Runtime), it was rewritten in C++/Win32 to eliminate the runtime requirement and reduce the binary size by 73%.
 
 ## Key Properties
 
-- Single executable, ~2.0 MB
+- Single executable, ~2.1 MB
 - Static C runtime (no CRT installation needed)
 - Windows system DLLs only: ole32, oleaut32, shell32, dwmapi, uxtheme, winmm, advapi32, user32, gdi32, kernel32
 - 7z.dll (1.8 MB) embedded as an RCDATA resource and unpacked to %TEMP%\AirZip on first run
@@ -55,7 +55,7 @@ AirZip.exe --help
 
 **GUI mode caveat**: When installed in Program Files, uninstall is asynchronous. The running exe cannot delete itself, so the work is handed to a temporary clone and this process returns immediately.
 
-## Installation and Uninstallment
+## Installation and Uninstallation
 
 Running without arguments (double-click) or with `--install` registers AirZip as the handler for 12 archive extensions: .zip, .rar, .7z, .tar, .gz, .bz2, .xz, .iso, .cab, .lzma, .wim, .arj.
 
@@ -79,7 +79,24 @@ build.cmd
 
 The script probes standard Visual Studio installation roots (avoiding vswhere due to cmd.exe parentheses parsing issues) and produces `native\out\AirZip.exe`.
 
-**Build prerequisites**: The 7z.dll file must exist at the repository root (it is embedded into the exe by the resource compiler).
+**Build prerequisites**: `7z.dll` and `icon.ico` must exist at the repository root; both are embedded into the exe by the resource compiler.
+
+**`build.cmd` must keep CRLF line endings.** cmd.exe cannot resolve the `:probe` label in a LF-only batch file, and fails with "The system cannot find the batch label specified".
+
+## Repository Layout
+
+```
+7z.dll                  7-Zip engine, embedded into the exe at build time
+icon.ico                Application icon, embedded at build time
+README.md
+native/airzip.cpp       The entire program
+native/airzip.rc        Resources: manifest, icon, embedded 7z.dll, version info
+native/airzip.manifest  asInvoker, common controls v6, per-monitor DPI, long paths
+native/resource.h       Resource IDs
+native/build.cmd        Build script (CRLF required)
+native/out/AirZip.exe   Build output
+test_archives/          Regression samples
+```
 
 ## Known Limitations
 
