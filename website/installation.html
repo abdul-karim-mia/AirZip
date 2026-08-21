@@ -696,12 +696,15 @@ test_archives/         <span class="c">regression samples</span></pre>
 
 <script src="/assets/js/main.js?v=2" defer></script>
 
-<!-- Vercel Web Analytics. Cookieless, no personal data, no cross-site tracking.
-     Requires Analytics to be enabled for the project in the Vercel dashboard;
-     the script 404s harmlessly anywhere else (local preview included). -->
+<!-- Vercel Web Analytics (page views) and Speed Insights (Core Web Vitals).
+     Both are cookieless, store no personal data, and do no cross-site tracking.
+     Each must be enabled separately for the project in the Vercel dashboard;
+     until then, and on any local preview, the scripts 404 harmlessly. -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>

@@ -442,9 +442,10 @@ docs/../../../autorun.inf</pre>
     <div class="note" style="margin-top:22px" data-reveal="60">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
       <div>
-        <b>This website</b> uses Vercel Web Analytics to count page views. It sets no
-        cookies, stores no personal data, and does not follow you across other sites.
-        That's the only thing on here that measures anything.
+        <b>This website</b> uses Vercel Web Analytics to count page views and Speed
+        Insights to measure how quickly pages load. Both are cookieless, store no personal
+        data, and do not follow you across other sites. That's everything on here that
+        measures anything.
       </div>
     </div>
   </div>
@@ -593,12 +594,15 @@ docs/../../../autorun.inf</pre>
 
 <script src="/assets/js/main.js?v=2" defer></script>
 
-<!-- Vercel Web Analytics. Cookieless, no personal data, no cross-site tracking.
-     Requires Analytics to be enabled for the project in the Vercel dashboard;
-     the script 404s harmlessly anywhere else (local preview included). -->
+<!-- Vercel Web Analytics (page views) and Speed Insights (Core Web Vitals).
+     Both are cookieless, store no personal data, and do no cross-site tracking.
+     Each must be enabled separately for the project in the Vercel dashboard;
+     until then, and on any local preview, the scripts 404 harmlessly. -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>

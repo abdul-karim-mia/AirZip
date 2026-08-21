@@ -44,21 +44,30 @@ Every push to `main` redeploys automatically.
 
 ## Analytics
 
-Each page loads Vercel Web Analytics from `/_vercel/insights/script.js`.
+Each page loads two Vercel scripts before `</body>`:
 
-**The script tag alone does nothing** — Analytics has to be switched on for the project
-first: Vercel dashboard → **Analytics** in the sidebar → **Enable**, then redeploy. Until
-then (and on any local preview) the request 404s harmlessly and the page is unaffected.
+| Script | What it measures |
+|---|---|
+| `/_vercel/insights/script.js` | Web Analytics — page views, referrers, countries |
+| `/_vercel/speed-insights/script.js` | Speed Insights — Core Web Vitals from real visitors |
 
-Vercel also provisions a project-specific `/<unique-path>/script.js` route that survives
-ad blockers better than the `/_vercel/` one. If the dashboard shows that path after you
-enable Analytics, swap it into all three HTML files.
+Both use a queue stub (`window.va` / `window.si`) so calls made before the script resolves
+are not lost.
 
-To confirm it's working, load a page and look for a `view` request in the Network tab.
+**The script tags alone do nothing.** Each product must be switched on separately in the
+Vercel dashboard — **Analytics** and **Speed Insights** in the sidebar, **Enable** on each
+— and then redeployed. Until that happens, and on any local preview, both requests 404
+harmlessly and the pages are unaffected.
 
-Speed Insights is the same pattern if you want it later —
-`<script defer src="/_vercel/speed-insights/script.js"></script>`, enabled separately in
-the dashboard.
+Vercel also provisions a project-specific `/<unique-path>/script.js` route for each, which
+survives ad blockers better than the `/_vercel/` paths. If the dashboard shows those paths
+after enabling, swap them into all three HTML files.
+
+To confirm they work once deployed, look in the Network tab for a `view` request
+(Analytics) and check that the Speed Insights script loads.
+
+Speed Insights bills by data point beyond the free allowance, so keep an eye on
+[usage](https://vercel.com/docs/speed-insights/managing-usage) if traffic grows.
 
 ## Caching
 
