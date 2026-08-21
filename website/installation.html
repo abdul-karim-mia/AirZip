@@ -137,6 +137,14 @@
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5 10.2 4.5v6.9H3V5.5Zm0 13 7.2 1v-6.8H3v5.8Zm8.4 1.2L21 21V12.6h-9.6v7.1Zm0-15.4v7.1H21V3l-9.6 1.3Z"/></svg>
           Open in Microsoft Store
         </a>
+
+        <!-- Protocol handler: opens the Store app directly, but only resolves on
+             Windows with the Store installed. Kept as a secondary link so a dead
+             click always has the working button sitting right above it. -->
+        <p class="btn-note" style="margin-top:14px">
+          On Windows already?
+          <a href="ms-windows-store://pdp/?productid=9NN6H81H7JBL" style="color:var(--accent);font-weight:600">Open it straight in the Store app</a>
+        </p>
       </div>
 
       <div data-reveal="100">
