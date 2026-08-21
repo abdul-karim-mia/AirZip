@@ -1,0 +1,14 @@
+AirZip uses the 7-Zip engine (7z.dll) for archive extraction.
+
+7-Zip
+Copyright (C) 1999-2024 Igor Pavlov
+
+7-Zip is licensed under the GNU LGPL license, with an additional
+restriction that the RAR decompression code may not be used to develop
+a RAR (or WinRAR) compressor.
+
+Full license text: https://www.7-zip.org/license.txt
+
+Per the LGPL, 7z.dll is used here as an unmodified, dynamically linked
+library (loaded from AirZip's own installation folder), and you may
+replace it with a compatible version of your choosing.

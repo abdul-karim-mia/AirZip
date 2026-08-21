@@ -24,6 +24,7 @@
 #include <vector>
 #include <set>
 #include <cstdio>
+#include <appmodel.h>
 
 #include "resource.h"
 
@@ -321,6 +322,16 @@ static void Emit(const std::wstring &text) {
     HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
     if (h && h != INVALID_HANDLE_VALUE)
         WriteConsoleW(h, text.c_str(), (DWORD)text.size(), &written, NULL);
+}
+
+// A Store/MSIX package owns install, uninstall, and file-type association for
+// its own app -- it declares associations in AppxManifest.xml and Windows
+// registers them without help. The self-elevating registry-writing install
+// path below is for the portable exe only; running it from a package would
+// mean a Store app silently asking for admin rights, which is not allowed.
+static bool IsPackaged() {
+    UINT32 len = 0;
+    return GetCurrentPackageFullName(&len, NULL) != APPMODEL_ERROR_NO_PACKAGE;
 }
 
 // ---------------------------------------------------------------------------
@@ -2095,13 +2106,24 @@ int WINAPI wWinMain(HINSTANCE inst, HINSTANCE, LPWSTR, int) {
     const wchar_t *cmd = argc >= 2 ? argv[1] : NULL;
     bool isFlag = cmd && (cmd[0] == L'-' || (cmd[0] == L'/' && cmd[1] == L'?'));
 
+    bool packaged = IsPackaged();
+
     if (argc < 2) {
-        // Double-clicked with no argument: offer to install.
-        int answer = ThemedMessage(NULL, L"AirZip",
-            L"Install AirZip and make it the default handler for archive files "
-            L"(.zip, .rar, .7z, and others)?",
-            AZ_BTN_YESNO, false);
-        if (answer == IDYES) rc = EnsureAdminAndInstall(false) ? AZ_OK : AZ_FAILED;
+        if (packaged) {
+            // Store owns the file associations; there is nothing to offer.
+            ThemedMessage(NULL, L"AirZip",
+                L"AirZip is installed. Right-click an archive file, choose "
+                L"\"Open with\", and select AirZip -- or set it as your default "
+                L"app for archive files in Settings.",
+                AZ_BTN_OK, false);
+        } else {
+            // Double-clicked with no argument: offer to install.
+            int answer = ThemedMessage(NULL, L"AirZip",
+                L"Install AirZip and make it the default handler for archive files "
+                L"(.zip, .rar, .7z, and others)?",
+                AZ_BTN_YESNO, false);
+            if (answer == IDYES) rc = EnsureAdminAndInstall(false) ? AZ_OK : AZ_FAILED;
+        }
     } else if (_wcsicmp(cmd, L"--help") == 0 || _wcsicmp(cmd, L"-h") == 0 ||
                _wcsicmp(cmd, L"/?") == 0) {
         if (g_cli) PrintUsage();
@@ -2111,20 +2133,30 @@ int WINAPI wWinMain(HINSTANCE inst, HINSTANCE, LPWSTR, int) {
     } else if (_wcsicmp(cmd, L"--version") == 0) {
         if (g_cli) Emit(L"\nAirZip 1.0.0.0\n");
         else MessageBoxW(NULL, L"AirZip 1.0.0.0", L"AirZip", MB_OK | MB_ICONINFORMATION);
-    } else if (_wcsicmp(cmd, L"--install") == 0) {
-        rc = EnsureAdminAndInstall(false) ? AZ_OK : AZ_FAILED;
-    } else if (_wcsicmp(cmd, L"--silent-install") == 0) {
-        rc = EnsureAdminAndInstall(true) ? AZ_OK : AZ_FAILED;
-    } else if (_wcsicmp(cmd, L"--uninstall") == 0) {
-        bool go = true;
-        if (!g_cli) {
-            go = MessageBoxW(NULL,
-                L"Remove AirZip and restore the previous handlers for archive files?",
-                L"AirZip", MB_YESNO | MB_ICONQUESTION) == IDYES;
+    } else if (_wcsicmp(cmd, L"--install") == 0 || _wcsicmp(cmd, L"--silent-install") == 0) {
+        bool silent = _wcsicmp(cmd, L"--silent-install") == 0;
+        if (packaged) {
+            if (!silent) ThemedMessage(NULL, L"AirZip",
+                L"AirZip was installed through the Microsoft Store and does not "
+                L"need a separate install step.", AZ_BTN_OK, false);
+        } else {
+            rc = EnsureAdminAndInstall(silent) ? AZ_OK : AZ_FAILED;
         }
-        if (go) rc = EnsureAdminAndUninstall(false) ? AZ_OK : AZ_FAILED;
-    } else if (_wcsicmp(cmd, L"--silent-uninstall") == 0) {
-        rc = EnsureAdminAndUninstall(true) ? AZ_OK : AZ_FAILED;
+    } else if (_wcsicmp(cmd, L"--uninstall") == 0 || _wcsicmp(cmd, L"--silent-uninstall") == 0) {
+        bool silent = _wcsicmp(cmd, L"--silent-uninstall") == 0;
+        if (packaged) {
+            if (!silent) ThemedMessage(NULL, L"AirZip",
+                L"AirZip was installed through the Microsoft Store. Uninstall it "
+                L"from Settings or the Start menu.", AZ_BTN_OK, false);
+        } else {
+            bool go = true;
+            if (!silent && !g_cli) {
+                go = ThemedMessage(NULL, L"AirZip",
+                    L"Remove AirZip and restore the previous handlers for archive files?",
+                    AZ_BTN_YESNO, false) == IDYES;
+            }
+            if (go) rc = EnsureAdminAndUninstall(silent) ? AZ_OK : AZ_FAILED;
+        }
     } else if (_wcsicmp(cmd, L"--uninstall-run") == 0) {
         UninstallFromClone(false);
     } else if (_wcsicmp(cmd, L"--uninstall-run-silent") == 0) {

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap uap3 rescap">
+
+  <Identity
+    Name="Sonarchalunfalnapurnewmas.AirZip"
+    Publisher="CN=70B0DB70-8EB7-417C-BD78-E45B21717ADC"
+    Version="1.0.0.0"
+    ProcessorArchitecture="x64" />
+
+  <Properties>
+    <DisplayName>AirZip</DisplayName>
+    <PublisherDisplayName>Abdul Karim Mia</PublisherDisplayName>
+    <Logo>Assets\Square150x150Logo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+
+  <Applications>
+    <Application Id="AirZip" Executable="AirZip.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="AirZip"
+        Description="Archive extractor for zip, 7z, rar, tar, gz, and other archive formats."
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\Square310x310Logo.png" />
+      </uap:VisualElements>
+
+      <Extensions>
+        <!-- Store-declared associations replace the exe's own registry writes.
+             The exe's install/uninstall/registry code never runs in this
+             package; the extraction entry point (AirZip.exe with a path) is unchanged. -->
+        <uap3:Extension Category="windows.fileTypeAssociation">
+          <uap3:FileTypeAssociation Name="airzip.archives">
+            <uap:DisplayName>Archive</uap:DisplayName>
+            <uap:SupportedFileTypes>
+              <uap:FileType>.zip</uap:FileType>
+              <uap:FileType>.7z</uap:FileType>
+              <uap:FileType>.rar</uap:FileType>
+              <uap:FileType>.tar</uap:FileType>
+              <uap:FileType>.gz</uap:FileType>
+              <uap:FileType>.bz2</uap:FileType>
+              <uap:FileType>.xz</uap:FileType>
+              <uap:FileType>.iso</uap:FileType>
+              <uap:FileType>.cab</uap:FileType>
+              <uap:FileType>.lzma</uap:FileType>
+              <uap:FileType>.wim</uap:FileType>
+              <uap:FileType>.arj</uap:FileType>
+            </uap:SupportedFileTypes>
+          </uap3:FileTypeAssociation>
+        </uap3:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+</Package>
