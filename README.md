@@ -1,35 +1,121 @@
+<div align="center">
+
+<img src="icon.png" alt="AirZip" width="128">
+
 # AirZip
 
-A lightweight Windows archive extractor with zero runtime dependencies.
+**Unzip like a Mac. On Windows.**
 
-## Overview
+A lightweight archive extractor with zero runtime dependencies — a single 2.1 MB executable
+that needs no .NET, no Visual C++ redistributable, and no setup wizard.
 
-AirZip is a standalone archive extractor built with raw Win32 C++ and 7-Zip's COM interfaces. It ships as a single 2.1 MB executable with no managed runtime, .NET, or external dependencies beyond Windows system DLLs.
+[![Microsoft Store](https://img.shields.io/badge/Microsoft_Store-Install-0078D4?style=flat-square&logo=microsoftstore&logoColor=white)](https://apps.microsoft.com/detail/9NN6H81H7JBL)
+[![Download](https://img.shields.io/github/v/release/abdul-karim-mia/AirZip?style=flat-square&label=Download%20.exe&color=1266e8)](https://github.com/abdul-karim-mia/AirZip/releases/latest/download/AirZip.exe)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![Platform](https://img.shields.io/badge/Windows-10%201809%2B%20·%20x64-0078D4?style=flat-square)](#requirements)
 
-Originally developed as a .NET 8 WinForms application (7.4 MB, requiring the .NET 8 Desktop Runtime), it was rewritten in C++/Win32 to eliminate the runtime requirement and reduce the binary size by 73%.
+[Website](https://airzip.vercel.app) · [Features](https://airzip.vercel.app/features.html) · [Installation](https://airzip.vercel.app/installation.html) · [Releases](https://github.com/abdul-karim-mia/AirZip/releases)
 
-## Key Properties
+</div>
 
-- Single executable, ~2.1 MB
-- Static C runtime (no CRT installation needed)
-- Windows system DLLs only: ole32, oleaut32, shell32, dwmapi, uxtheme, winmm, advapi32, user32, gdi32, kernel32
-- 7z.dll (1.8 MB) embedded as an RCDATA resource and unpacked to %TEMP%\AirZip on first run
-- Per-monitor DPI aware, long-path aware, UTF-8 code page aware
+---
+
+## Why
+
+On macOS you double-click an archive and the files are simply *there*. No dialog asking
+where to put them, no file manager to close, no install to sit through.
+
+Windows never got the simple version. Every extractor wants to be a file manager. AirZip
+wants to be a verb: point it at an archive, get the files, move on. If extraction finishes
+quickly, you never even see a window.
+
+It's free, open source, and contains no networking code at all — there is nothing for it
+to send anywhere.
+
+<div align="center">
+<img src="store-listing/screenshots/1_extracting_dark.png" alt="AirZip progress window" width="640">
+<br><em>The entire interface. That is all of it.</em>
+</div>
+
+---
+
+## Install
+
+| | |
+|---|---|
+| **[Microsoft Store](https://apps.microsoft.com/detail/9NN6H81H7JBL)** *(recommended)* | Automatic updates, signed by Microsoft, no admin rights needed |
+| **[Standalone .exe](https://github.com/abdul-karim-mia/AirZip/releases/latest/download/AirZip.exe)** | Portable — runs from a USB stick, works offline, no installation |
+
+The standalone build is not signed with an EV certificate, so SmartScreen may show
+"Windows protected your PC" on first run. Click **More info → Run anyway**, or use the
+Store build.
+
+To register AirZip as the handler for all 12 archive types:
+
+```cmd
+AirZip.exe --install
+```
+
+### Requirements
+
+Windows 10 version 1809 (build 17763) or newer, x64. Nothing else — the C runtime is
+linked statically and only Windows' own system DLLs are used.
+
+---
 
 ## Features
 
-- **Smart folder extraction**: Archives with a single root item extract beside the source file. Archives with multiple root items extract into a subfolder named after the archive.
-- **Multi-volume support**: Handles numbered split archives (.7z.001, .7z.002, etc.) transparently through a spanning stream.
-- **Theme integration**: Follows Windows light/dark theme with live switching. Progress bar accent color reads from DWM settings.
-- **Delayed UI**: Progress window appears only if extraction is still running after 400 ms, avoiding flashes on fast operations.
-- **Progress feedback**: Displays current filename, percentage complete, and bytes done/total.
-- **Completion chime**: System sound (SystemAsterisk) respects the user's Sound scheme settings.
-- **Password protection**: Dialog prompt for encrypted archives (code path present; end-to-end testing pending).
-- **Zip-slip defense**: Path validation rejects absolute paths and ".." escape attempts.
+**Smart folder handling.** One root item inside the archive and it extracts *beside* the
+source file, because the archive already did the organising. Several loose root items and
+AirZip creates a folder named after the archive. No Downloads-folder explosion, and no
+pointless `foo/foo/foo` nesting.
+
+**Multi-volume support.** Hand it `backup.7z.001` and it finds `.002`, `.003` and the rest,
+then streams them as one continuous file through a spanning stream. Progress reflects the
+whole set, not one volume.
+
+**Live theme switching.** Follows the Windows light/dark setting and keeps listening —
+change your theme mid-extraction and the window redraws immediately. The progress bar
+colour is read from your DWM accent setting.
+
+**A window only when it's earned.** The progress window is held back for 400 ms. Small
+archives finish inside that window and never flash anything on screen. Larger ones get a
+proper readout: current filename, percentage, and bytes done against the total.
+
+**Zip-slip defence.** Archive entry paths are validated before anything is written.
+Absolute paths and `..` traversals are rejected, so extraction cannot escape the
+destination folder whatever the archive claims its contents are called.
+
+**Completion chime.** Plays `SystemAsterisk`, which means it respects your Sound scheme —
+silence that and AirZip stays quiet too.
+
+**Password prompt** for encrypted archives, instead of a cryptic failure.
+
+Per-monitor DPI aware, long-path aware, UTF-8 code page aware.
+
+---
+
+## Supported formats
+
+Extraction is handled by the official 7-Zip engine, embedded in the executable as an
+RCDATA resource and unpacked to `%TEMP%\AirZip` on first run.
+
+| Status | Formats |
+|---|---|
+| **Verified in testing** | `.zip` `.7z` (including split volumes) `.tar` `.gz` (including `.tar.gz`) |
+| **Wired up, not yet covered by our own test archives** | `.rar` `.bz2` `.xz` `.iso` `.cab` `.lzma` `.wim` `.arj` |
+
+"Untested" is not "broken" — those formats route through 7-Zip handlers that are
+well-proven inside 7-Zip itself. We simply don't have sample archives to prove it for
+AirZip yet, so we won't claim otherwise. Password-protected archives are likewise
+implemented and the dialog renders, but the path hasn't been verified end to end.
+
+If one misbehaves, [open an issue](https://github.com/abdul-karim-mia/AirZip/issues) with a
+sample and it becomes a regression test.
+
+---
 
 ## Usage
-
-Extract an archive by passing its path, or run one of the installation commands. The executable is a GUI-subsystem binary, so cmd.exe does not wait for it. Use `start /wait` (cmd) or `Start-Process -Wait` (PowerShell) when the exit code matters.
 
 ```cmd
 AirZip.exe <archive>
@@ -41,74 +127,157 @@ AirZip.exe --version
 AirZip.exe --help
 ```
 
-| Option | Result |
-|--------|--------|
-| `<archive>` | Extract the archive |
-| `--install` | Install and register file types (prompts for elevation) |
-| `--silent-install` | Install with no dialogs |
-| `--uninstall` | Uninstall and restore previous handlers (prompts for elevation and confirmation) |
-| `--silent-uninstall` | Uninstall with no dialogs |
-| `--version` | Print version |
-| `--help` | Print usage |
+| Option | Result | Elevation |
+|---|---|---|
+| `<archive>` | Extract the archive | No |
+| `--install` | Install and register all 12 file types | Prompts |
+| `--silent-install` | Same, with no dialogs — for scripts | Required |
+| `--uninstall` | Uninstall and restore previous handlers | Prompts + confirms |
+| `--silent-uninstall` | Same, with no dialogs | Required |
+| `--version` | Print version | No |
+| `--help` | Print usage | No |
 
-**Exit codes**: 0 (success), 1 (failed), 2 (bad usage), 3 (file not found), 4 (not elevated).
+**Exit codes:** `0` success · `1` failed · `2` bad usage · `3` file not found · `4` not elevated
 
-**GUI mode caveat**: When installed in Program Files, uninstall is asynchronous. The running exe cannot delete itself, so the work is handed to a temporary clone and this process returns immediately.
+### Reading the exit code
 
-## Installation and Uninstallation
-
-Running without arguments (double-click) or with `--install` registers AirZip as the handler for 12 archive extensions: .zip, .rar, .7z, .tar, .gz, .bz2, .xz, .iso, .cab, .lzma, .wim, .arj.
-
-On install, the previous handler for each extension is backed up in HKEY_LOCAL_MACHINE\SOFTWARE\AirZip\Associations. On uninstall, the handlers are restored from that backup, or if the backup is missing, AirZip attempts to restore a classic ProgID from OpenWithProgids (e.g., CompressedFolder for .zip).
-
-An entry is added to Add/Remove Programs (HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\AirZip).
-
-## Building from Source
-
-### Requirements
-- Visual Studio 2022 Build Tools (or Community/Professional/Enterprise)
-- C++ workload installed
-- Windows SDK
-
-### Build
+AirZip is a GUI-subsystem binary, so `cmd.exe` does **not** wait for it — it returns
+immediately and you would read the wrong code. Force the wait:
 
 ```cmd
-cd native
+start /wait AirZip.exe archive.zip
+echo %ERRORLEVEL%
+```
+
+```powershell
+$p = Start-Process AirZip.exe -ArgumentList 'archive.zip' -Wait -PassThru
+$p.ExitCode
+```
+
+---
+
+## File associations
+
+AirZip never takes over your file types silently. It becomes the default handler only if
+you run `--install` or set it yourself in **Settings → Apps → Default apps**.
+
+`--install` registers 12 extensions: `.zip` `.rar` `.7z` `.tar` `.gz` `.bz2` `.xz` `.iso`
+`.cab` `.lzma` `.wim` `.arj`, and adds an entry to Add/Remove Programs.
+
+Before AirZip claims an extension, the existing handler is backed up to
+`HKLM\SOFTWARE\AirZip\Associations`. On uninstall they are restored from that backup — or,
+if the backup is missing, AirZip falls back to a classic ProgID from `OpenWithProgids`
+(for example `CompressedFolder` for `.zip`).
+
+**Two caveats on uninstall:**
+
+- When installed in Program Files, uninstall is asynchronous. A running executable cannot
+  delete itself, so the work is handed to a temporary clone and the original process
+  returns immediately.
+- `.arj`, `.lzma` and `.wim` may end up unassociated if the only handler available to
+  restore was an AppX package identity, which Windows won't accept as a plain file-type
+  default. This is a limitation of the restore heuristic, not of extraction.
+
+---
+
+## Building from source
+
+**Requirements:** Visual Studio 2022 Build Tools (or Community/Professional/Enterprise)
+with the C++ workload, plus the Windows SDK. `7z.dll` and `icon.ico` must be present at the
+repository root — the resource compiler embeds both into the exe.
+
+```cmd
+git clone https://github.com/abdul-karim-mia/AirZip
+cd AirZip\native
 build.cmd
 ```
 
-The script probes standard Visual Studio installation roots (avoiding vswhere due to cmd.exe parentheses parsing issues) and produces `native\out\AirZip.exe`.
+Output lands at `native\out\AirZip.exe`. The script probes the standard Visual Studio
+installation roots directly, avoiding `vswhere` because of cmd.exe's parentheses parsing.
 
-**Build prerequisites**: `7z.dll` and `icon.ico` must exist at the repository root; both are embedded into the exe by the resource compiler.
+> [!IMPORTANT]
+> **`build.cmd` must keep CRLF line endings.** With LF-only endings `cmd.exe` cannot
+> resolve the `:probe` label and fails with *"The system cannot find the batch label
+> specified"*. Watch your git autocrlf settings.
 
-**`build.cmd` must keep CRLF line endings.** cmd.exe cannot resolve the `:probe` label in a LF-only batch file, and fails with "The system cannot find the batch label specified".
+---
 
-## Repository Layout
+## How it's built
+
+AirZip began as a .NET 8 WinForms application: 7.4 MB, and it needed the .NET 8 Desktop
+Runtime installed before it would start at all. Rewriting it in raw Win32 C++ removed the
+runtime requirement entirely and cut 73% of the size.
+
+| | |
+|---|---|
+| **Language** | C++ against the raw Win32 API — no framework, no UI toolkit |
+| **Extraction engine** | 7-Zip via its COM interfaces (`7z.dll`, 1.8 MB, embedded as an RCDATA resource) |
+| **C runtime** | Linked statically — no redistributable needed |
+| **System DLLs** | `ole32` `oleaut32` `shell32` `dwmapi` `uxtheme` `winmm` `advapi32` `user32` `gdi32` `kernel32` |
+| **Third-party deps** | None beyond 7-Zip |
+| **Binary size** | 2,193,408 bytes (2.1 MB) |
+| **Architecture** | x64 only |
+
+### Repository layout
 
 ```
 7z.dll                  7-Zip engine, embedded into the exe at build time
 icon.ico                Application icon, embedded at build time
-README.md
+icon.png                Source artwork
+LICENSE                 MIT, plus the 7-Zip LGPL notice
 native/airzip.cpp       The entire program
 native/airzip.rc        Resources: manifest, icon, embedded 7z.dll, version info
 native/airzip.manifest  asInvoker, common controls v6, per-monitor DPI, long paths
 native/resource.h       Resource IDs
 native/build.cmd        Build script (CRLF required)
 native/out/AirZip.exe   Build output
+msix/                   MSIX packaging for the Microsoft Store
+store-listing/          Store description, privacy policy, screenshots
 test_archives/          Regression samples
+website/                Landing page (static, deployed to Vercel)
 ```
 
-## Known Limitations
+---
 
-### Untested
-- **Password-protected archives**: The password prompt code path is present and renders, but has never been tested end-to-end due to lack of an encrypted sample archive.
-- **.rar, .iso, .cab, .wim, .arj extraction**: Wired up via 7-Zip handlers but untested (no sample archives available).
+## Privacy
 
-### Verified Formats
-Confirmed to work in testing: .zip, .7z (including split volumes), .tar, .tar.gz.
+AirZip collects nothing. No personal data, no usage data, no telemetry, no crash reporting.
+It never connects to the internet — there is no networking code in the binary. It requests
+no permissions beyond `runFullTrust` to run as a desktop app, and reads and writes only the
+files you explicitly point it at.
 
-### Platform
-x64 only.
+---
 
-### Caveat on Uninstall
-On uninstall, .arj, .lzma, and .wim may end up unassociated if only an AppX package identity was available to restore (AppX identities do not work as plain file-type defaults). This is a limitation of the restore heuristic, not of extraction.
+## Known limitations
+
+- **No compression.** AirZip extracts only; it cannot create or modify archives. Use
+  Windows' right-click → Compress, or 7-Zip, for that.
+- **x64 Windows only.** No 32-bit or ARM64 build, and nothing older than Windows 10 1809.
+- **Untested paths.** Password-protected archives and the `.rar` `.bz2` `.xz` `.iso` `.cab`
+  `.lzma` `.wim` `.arj` handlers are implemented but not yet verified against real samples.
+- **Uninstall quirk** for `.arj`, `.lzma` and `.wim` — see [File associations](#file-associations).
+
+---
+
+## Contributing
+
+Issues and pull requests are welcome. Sample archives for the untested formats are
+especially useful — they turn straight into regression tests.
+
+---
+
+## Licence
+
+AirZip is released under the [MIT License](LICENSE) — free to use, modify and redistribute.
+
+Extraction is powered by the **7-Zip engine** (LGPL) — `7z.dll` © 1999–2024 Igor Pavlov,
+shipped unmodified and dynamically linked. See [NOTICE](store-listing/NOTICE.txt) and the
+[7-Zip licence](https://www.7-zip.org/license.txt).
+
+---
+
+<div align="center">
+
+Built by **[Abdul Karim Mia](https://abdulkarimmia.in/)**
+
+</div>

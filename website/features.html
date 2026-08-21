@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Features — AirZip</title>
+<meta name="description" content="Every AirZip feature in detail: smart folder handling, split archive support, live theme switching, delayed progress UI, zip-slip protection, and the technical design behind a 2.1 MB extractor.">
+<link rel="canonical" href="https://airzip.vercel.app/features.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Features — AirZip">
+<meta property="og:description" content="Every AirZip feature in detail, plus the technical design behind a 2.1 MB extractor.">
+<meta property="og:image" content="/assets/img/logo.png">
+
+<link rel="icon" href="/assets/favicon.ico" sizes="any">
+<link rel="icon" href="/assets/img/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f8fd">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#080f1c">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("airzip-theme");
+      var prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+      document.documentElement.setAttribute("data-theme", saved || (prefersLight ? "light" : "dark"));
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/">
+      <img src="/assets/img/logo.png" alt="" width="32" height="32">
+      AirZip
+    </a>
+
+    <nav aria-label="Main">
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/features.html" aria-current="page">Features</a></li>
+        <li><a href="/installation.html">Installation</a></li>
+        <li><a href="https://github.com/abdul-karim-mia/AirZip" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" fill="currentColor" width="15" height="15" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          GitHub
+        </a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="icon-btn theme-toggle" type="button" aria-label="Switch to light theme">
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+
+      <a class="btn btn--primary nav-store" href="https://apps.microsoft.com/detail/9NN6H81H7JBL" target="_blank" rel="noopener">Get it free</a>
+
+      <button class="icon-btn nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ==================== PAGE HEAD ==================== -->
+<section class="page-head">
+  <div class="wrap">
+    <span class="eyebrow" data-anim>Features</span>
+    <h1 data-anim style="animation-delay:.08s;font-size:clamp(2.1rem,5vw,3.3rem)">Everything AirZip does</h1>
+    <p data-anim style="animation-delay:.15s">
+      A short list, described properly. AirZip is small because it refuses to do things
+      badly — what's here is what we could make genuinely good.
+    </p>
+
+    <div class="toc" data-anim style="animation-delay:.22s">
+      <a href="#extraction">Extraction</a>
+      <a href="#interface">Interface</a>
+      <a href="#formats">Formats</a>
+      <a href="#security">Security</a>
+      <a href="#technical">Technical design</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#limits">Known limits</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== EXTRACTION ==================== -->
+<section class="section" id="extraction">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Extraction</span>
+      <h2>Unpacking that guesses right</h2>
+    </div>
+
+    <div class="split">
+      <div data-reveal>
+        <h3>Smart folder handling</h3>
+        <p>
+          Archives are packed inconsistently. Some contain a single tidy root folder;
+          others dump forty loose files at the top level. Most extractors treat both the
+          same and let you deal with the mess.
+        </p>
+        <p>
+          AirZip looks first. <b>One root item</b> — a folder or a lone file — and it
+          extracts <em>beside</em> the archive, because the archive already did the
+          organising. <b>Several root items</b> and it creates a folder named after the
+          archive to hold them.
+        </p>
+        <p>
+          The result: you never get a "Downloads folder explosion", and you never get
+          <code>Project_Backup/Project_Backup/Project_Backup/</code> either.
+        </p>
+      </div>
+
+      <figure class="shot" data-reveal="100">
+        <img src="/assets/img/shots/smart-extract.png" alt="Windows Explorer showing Project_Backup.zip extracted to a single Project_Backup folder beside it" loading="lazy">
+      </figure>
+    </div>
+
+    <div class="split split--flip">
+      <div data-reveal>
+        <h3>Split archives, joined transparently</h3>
+        <p>
+          Large downloads often arrive as numbered volumes:
+          <code>backup.7z.001</code>, <code>backup.7z.002</code>, and so on. Some tools
+          make you join them manually first; others only work if you happen to
+          double-click the right one.
+        </p>
+        <p>
+          Point AirZip at any part and it locates the rest, then presents them to the
+          7-Zip engine through a single spanning stream — as if the archive had never been
+          split. Progress and byte counts reflect the whole set, not one volume.
+        </p>
+      </div>
+
+      <div data-reveal="100">
+        <div class="code">
+          <div class="code-head"><span>What you have</span></div>
+<pre>backup.7z.001   700 MB
+backup.7z.002   700 MB
+backup.7z.003   214 MB
+
+<span class="c">→ double-click any one of them</span>
+<span class="c">→ AirZip extracts all 1.6 GB as one archive</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="split">
+      <div data-reveal>
+        <h3>Encrypted archives</h3>
+        <p>
+          When an archive is password-protected, AirZip shows a themed prompt instead of
+          failing with an error code. Enter the password and extraction continues
+          normally.
+        </p>
+        <div class="note note--amber" style="margin-top:18px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
+          <div>
+            <b>Being straight with you:</b> the password path is implemented and the dialog
+            renders correctly, but it hasn't been tested end to end yet — we don't have a
+            good encrypted sample to test against. Treat it as working-but-unproven.
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal="100">
+        <h3>Long paths and odd names</h3>
+        <p>
+          AirZip is long-path aware, so archives containing paths beyond the traditional
+          260-character limit extract without truncation or mysterious failures.
+        </p>
+        <p>
+          It's also UTF-8 code page aware, which means filenames in Japanese, Arabic,
+          Cyrillic, emoji — whatever the archive contains — come out with their names
+          intact rather than as mojibake.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== INTERFACE ==================== -->
+<section class="section section--tint" id="interface">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Interface</span>
+      <h2>The best UI is the one you don't see</h2>
+      <p>AirZip's entire interface is a small progress card. Here it is, in both themes.</p>
+    </div>
+
+    <div class="grid grid--2" style="margin-bottom:44px">
+      <figure class="shot" data-reveal="0">
+        <img src="/assets/img/shots/extracting-dark.png" alt="AirZip progress card in dark theme showing IMG_1102.jpg at 38 percent" loading="lazy">
+      </figure>
+      <figure class="shot" data-reveal="80">
+        <img src="/assets/img/shots/extracting-light.png" alt="AirZip progress card in light theme" loading="lazy">
+      </figure>
+    </div>
+
+    <div class="grid grid--3">
+      <article class="card" data-reveal="0">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </div>
+        <h3>400 ms of patience</h3>
+        <p>
+          The progress window doesn't appear immediately. AirZip waits 400 milliseconds
+          first — long enough that small archives finish silently and never flash a window
+          at you. Only work that's actually going to take a moment gets a window.
+        </p>
+      </article>
+
+      <article class="card" data-reveal="60">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M7 17l-2.1 2.1M19.1 4.9 17 7"/></svg>
+        </div>
+        <h3>Live theme switching</h3>
+        <p>
+          AirZip reads your Windows light/dark preference at launch and keeps listening.
+          Change your theme while an extraction is running and the window redraws in the
+          new palette immediately — no restart, no half-dark window.
+        </p>
+      </article>
+
+      <article class="card" data-reveal="120">
+        <div class="card-icon card-icon--amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 7 8H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h3l5 5V3Z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>
+        </div>
+        <h3>Your accent, your sound</h3>
+        <p>
+          The progress bar colour is read from your DWM accent setting, so it matches the
+          rest of your desktop. When extraction completes it plays
+          <code>SystemAsterisk</code> — which means if you've silenced that in your Sound
+          scheme, AirZip stays quiet too.
+        </p>
+      </article>
+
+      <article class="card" data-reveal="0">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10M12 18v2"/></svg>
+        </div>
+        <h3>Sharp on any display</h3>
+        <p>
+          Per-monitor DPI aware. Drag the window between a 4K laptop screen and a 1080p
+          external monitor and the text re-renders crisply on each, rather than scaling up
+          into a blur.
+        </p>
+      </article>
+
+      <article class="card" data-reveal="60">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
+        </div>
+        <h3>Progress that means something</h3>
+        <p>
+          Current filename, percentage, and bytes done against the total — updated as it
+          goes. Enough to know whether to wait or go make tea, and nothing beyond that.
+        </p>
+      </article>
+
+      <article class="card" data-reveal="120">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="m8 10 2.5 2L8 14M13 14h3"/></svg>
+        </div>
+        <h3>Scriptable from the shell</h3>
+        <p>
+          Every action has a command-line flag and a meaningful exit code, so AirZip drops
+          into batch files and deployment scripts as easily as it sits in Explorer.
+          <a href="/installation.html#cli" style="color:var(--accent)">See the CLI reference →</a>
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FORMATS ==================== -->
+<section class="section" id="formats">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Formats</span>
+      <h2>What it opens</h2>
+      <p>
+        Extraction is handled by the official 7-Zip engine, embedded in the executable as
+        a resource and unpacked to <code>%TEMP%\AirZip</code> on first run.
+      </p>
+    </div>
+
+    <div class="table-scroll" data-reveal>
+      <table>
+        <thead>
+          <tr>
+            <th>Extension</th>
+            <th>Format</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>.zip</code></td><td>ZIP</td><td><span class="yes">Verified</span></td></tr>
+          <tr><td><code>.7z</code></td><td>7-Zip, including <code>.001</code> split volumes</td><td><span class="yes">Verified</span></td></tr>
+          <tr><td><code>.tar</code></td><td>Tape archive</td><td><span class="yes">Verified</span></td></tr>
+          <tr><td><code>.gz</code></td><td>gzip, including <code>.tar.gz</code></td><td><span class="yes">Verified</span></td></tr>
+          <tr><td><code>.rar</code></td><td>WinRAR archive</td><td><span class="no">Untested</span></td></tr>
+          <tr><td><code>.bz2</code></td><td>bzip2</td><td><span class="no">Untested</span></td></tr>
+          <tr><td><code>.xz</code></td><td>XZ / LZMA2</td><td><span class="no">Untested</span></td></tr>
+          <tr><td><code>.iso</code></td><td>Disc image</td><td><span class="no">Untested</span></td></tr>
+          <tr><td><code>.cab</code></td><td>Windows cabinet</td><td><span class="no">Untested</span></td></tr>
+          <tr><td><code>.lzma</code></td><td>Raw LZMA</td><td><span class="no">Untested</span></td></tr>
+          <tr><td><code>.wim</code></td><td>Windows imaging format</td><td><span class="no">Untested</span></td></tr>
+          <tr><td><code>.arj</code></td><td>ARJ archive</td><td><span class="no">Untested</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note" style="margin-top:24px" data-reveal>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
+      <div>
+        <b>"Untested" is not "broken".</b> Those formats are wired to 7-Zip handlers that
+        work reliably inside 7-Zip itself. We simply don't have sample archives to prove it
+        for AirZip yet, so we won't claim otherwise. If one fails for you,
+        <a href="https://github.com/abdul-karim-mia/AirZip/issues" target="_blank" rel="noopener" style="color:var(--accent)">file an issue with the sample</a>
+        and it becomes a regression test.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECURITY ==================== -->
+<section class="section section--tint" id="security">
+  <div class="wrap split">
+    <div data-reveal>
+      <span class="eyebrow">Security</span>
+      <h2 style="margin-bottom:16px">Archives are untrusted input</h2>
+      <p style="color:var(--text-muted)">
+        An archive is a file someone else made. It can name its entries anything at all,
+        including paths that climb out of the folder you chose and land somewhere
+        important. That attack has a name — <b>zip slip</b> — and it has hit a long list
+        of otherwise-careful software.
+      </p>
+      <p style="color:var(--text-muted)">
+        AirZip validates every entry path before writing anything. Absolute paths are
+        rejected. Any path containing a <code>..</code> traversal is rejected. Extraction
+        cannot escape the destination folder you chose, whatever the archive claims its
+        contents are called.
+      </p>
+    </div>
+
+    <div data-reveal="100">
+      <div class="code" style="margin-bottom:20px">
+        <div class="code-head"><span>Rejected before any write</span></div>
+<pre><span class="c">// absolute path</span>
+C:\Windows\System32\evil.dll
+
+<span class="c">// traversal out of the destination</span>
+..\..\..\Users\you\Startup\evil.exe
+
+<span class="c">// mixed separators, same trick</span>
+docs/../../../autorun.inf</pre>
+      </div>
+
+      <ul class="checks">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>Runs as you, not as admin.</b> The manifest requests <code>asInvoker</code> — extraction never silently elevates. Only installing file associations asks for elevation, because it writes to HKLM.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>No network surface.</b> There is no socket code in the binary, so there is no remote attack surface to speak of.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>Auditable in one sitting.</b> The whole program is a single C++ source file you can read yourself.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TECHNICAL ==================== -->
+<section class="section" id="technical">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Technical design</span>
+      <h2>Why it's 2.1 MB</h2>
+      <p>
+        AirZip started life as a .NET 8 WinForms app: 7.4 MB, and it needed the .NET 8
+        Desktop Runtime installed before it would start at all. Rewriting it in raw
+        Win32 C++ removed the runtime requirement entirely and cut 73% of the size.
+      </p>
+    </div>
+
+    <div class="stats" data-reveal style="margin-bottom:40px">
+      <div class="stat"><b>7.4 MB</b><span>Old .NET 8 build</span></div>
+      <div class="stat"><b>2.1 MB</b><span>Current C++ build</span></div>
+      <div class="stat"><b>−73%</b><span>Size reduction</span></div>
+      <div class="stat"><b>0</b><span>Runtimes to install</span></div>
+    </div>
+
+    <div class="table-scroll" data-reveal>
+      <table>
+        <tbody>
+          <tr><td style="width:38%"><b>Language</b></td><td>C++ against the raw Win32 API — no framework, no UI toolkit</td></tr>
+          <tr><td><b>Extraction engine</b></td><td>7-Zip via its COM interfaces (<code>7z.dll</code>, 1.8 MB, embedded as an RCDATA resource)</td></tr>
+          <tr><td><b>C runtime</b></td><td>Linked statically — no Visual C++ redistributable needed</td></tr>
+          <tr><td><b>System DLLs used</b></td><td><code>ole32</code>, <code>oleaut32</code>, <code>shell32</code>, <code>dwmapi</code>, <code>uxtheme</code>, <code>winmm</code>, <code>advapi32</code>, <code>user32</code>, <code>gdi32</code>, <code>kernel32</code></td></tr>
+          <tr><td><b>Third-party dependencies</b></td><td>None beyond 7-Zip itself</td></tr>
+          <tr><td><b>DPI</b></td><td>Per-monitor aware v2</td></tr>
+          <tr><td><b>Paths</b></td><td>Long-path aware, UTF-8 code page aware</td></tr>
+          <tr><td><b>Subsystem</b></td><td>GUI — so <code>cmd.exe</code> returns immediately; use <code>start /wait</code> when you need the exit code</td></tr>
+          <tr><td><b>Architecture</b></td><td>x64 only</td></tr>
+          <tr><td><b>Minimum OS</b></td><td>Windows 10 version 1809 (build 17763)</td></tr>
+          <tr><td><b>Source</b></td><td>One file: <code>native/airzip.cpp</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PRIVACY ==================== -->
+<section class="section section--tint" id="privacy">
+  <div class="wrap" style="max-width:820px">
+    <div class="section-head section-head--center" data-reveal>
+      <span class="eyebrow">Privacy</span>
+      <h2>The shortest privacy policy you'll read</h2>
+    </div>
+
+    <div class="card" style="padding:36px" data-reveal>
+      <ul class="checks">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>No data collection.</b> No personal data, no usage data, no telemetry, no crash reporting.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>No internet connection.</b> AirZip never connects to anything. It contains no networking code.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>No accounts, ads, or upsells.</b> There is no paid version to be nagged toward.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>Minimal permissions.</b> Only <code>runFullTrust</code> to run as a desktop app. No camera, microphone, location, or contacts access.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>Only the files you point at.</b> It reads the archive you opened and writes the extracted files. Nothing else on disk is touched.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== LIMITS ==================== -->
+<section class="section" id="limits">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="eyebrow">Known limits</span>
+      <h2>What AirZip won't do</h2>
+      <p>
+        Published openly, because finding this out after you install is worse than reading
+        it now.
+      </p>
+    </div>
+
+    <div class="grid grid--2">
+      <article class="card" data-reveal="0">
+        <div class="card-icon card-icon--amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6A2 2 0 0 0 22 18L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        </div>
+        <h3>No compression</h3>
+        <p>
+          AirZip extracts only. It cannot create or modify archives. Use Windows' built-in
+          right-click → Compress, or 7-Zip, for that.
+        </p>
+      </article>
+
+      <article class="card" data-reveal="60">
+        <div class="card-icon card-icon--amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10"/></svg>
+        </div>
+        <h3>x64 Windows only</h3>
+        <p>
+          No 32-bit or ARM64 build today. Windows 10 version 1809 or newer is required.
+          Nothing older, and no macOS or Linux version.
+        </p>
+      </article>
+
+      <article class="card" data-reveal="0">
+        <div class="card-icon card-icon--amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        </div>
+        <h3>Untested paths</h3>
+        <p>
+          Password-protected archives and the <code>.rar</code>, <code>.iso</code>,
+          <code>.cab</code>, <code>.wim</code>, <code>.arj</code> handlers are implemented
+          but not yet verified against real samples.
+        </p>
+      </article>
+
+      <article class="card" data-reveal="60">
+        <div class="card-icon card-icon--amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>
+        </div>
+        <h3>An uninstall quirk</h3>
+        <p>
+          On uninstall, <code>.arj</code>, <code>.lzma</code> and <code>.wim</code> can end
+          up unassociated if the only handler available to restore was an AppX package
+          identity, which Windows won't accept as a plain file-type default.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="wrap" style="padding-block:clamp(56px,8vw,96px)">
+  <div class="cta" data-reveal>
+    <h2>Try it — it's 2.1 MB</h2>
+    <p>Smaller than the screenshot you're looking at was before we compressed it.</p>
+    <div class="btn-row">
+      <a class="btn btn--primary btn--lg" href="https://apps.microsoft.com/detail/9NN6H81H7JBL" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5 10.2 4.5v6.9H3V5.5Zm0 13 7.2 1v-6.8H3v5.8Zm8.4 1.2L21 21V12.6h-9.6v7.1Zm0-15.4v7.1H21V3l-9.6 1.3Z"/></svg>
+        Get from Microsoft Store
+      </a>
+      <a class="btn btn--ghost btn--lg" href="/installation.html">Installation guide</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="/">
+          <img src="/assets/img/logo.png" alt="" width="32" height="32">
+          AirZip
+        </a>
+        <p>A lightweight Windows archive extractor with zero runtime dependencies. Free, open source, and quiet about it.</p>
+      </div>
+
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/features.html">Features</a></li>
+          <li><a href="/installation.html">Installation</a></li>
+          <li><a href="/features.html#formats">Supported formats</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Get it</h4>
+        <ul>
+          <li><a href="https://apps.microsoft.com/detail/9NN6H81H7JBL" target="_blank" rel="noopener">Microsoft Store</a></li>
+          <li><a href="https://github.com/abdul-karim-mia/AirZip/releases/latest/download/AirZip.exe" target="_blank" rel="noopener">Download .exe</a></li>
+          <li><a href="/installation.html#cli">Command line</a></li>
+          <li><a href="/installation.html#build">Build from source</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Project</h4>
+        <ul>
+          <li><a href="https://github.com/abdul-karim-mia/AirZip" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/abdul-karim-mia/AirZip/issues" target="_blank" rel="noopener">Issues</a></li>
+          <li><a href="https://www.7-zip.org/license.txt" target="_blank" rel="noopener">7-Zip licence</a></li>
+          <li><a href="/features.html#privacy">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> <a href="https://abdulkarimmia.in/" target="_blank" rel="noopener">Abdul Karim Mia</a> · Built with Win32 C++</span>
+      <span>Powered by the 7-Zip engine (LGPL) — 7z.dll © 1999–2024 Igor Pavlov</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js" defer></script>
+</body>
+</html>
