@@ -42,6 +42,17 @@ rather than opening the files directly.
 
 Every push to `main` redeploys automatically.
 
+## Caching
+
+`vercel.json` caches `/assets/img/*` for a year as `immutable`, but CSS and JS
+**must revalidate** on every request. Those filenames are not content-hashed, so caching
+them long-term would freeze visitors on a stale stylesheet — which is exactly what happens
+if you get it wrong.
+
+The `?v=N` query on the `styles.css` and `main.js` links is a second line of defence
+against intermediary caches. **Bump `N` in all three HTML files whenever you ship a
+visible CSS or JS change.**
+
 ## Design notes
 
 - **Theme.** Dark by default, follows `prefers-color-scheme`, and the toggle persists to
