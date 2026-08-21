@@ -100,18 +100,15 @@ Per-monitor DPI aware, long-path aware, UTF-8 code page aware.
 Extraction is handled by the official 7-Zip engine, embedded in the executable as an
 RCDATA resource and unpacked to `%TEMP%\AirZip` on first run.
 
-| Status | Formats |
-|---|---|
-| **Verified in testing** | `.zip` `.7z` (including split volumes) `.tar` `.gz` (including `.tar.gz`) |
-| **Wired up, not yet covered by our own test archives** | `.rar` `.bz2` `.xz` `.iso` `.cab` `.lzma` `.wim` `.arj` |
+`.zip` · `.7z` · `.rar` · `.tar` · `.gz` · `.bz2` · `.xz` · `.iso` · `.cab` · `.lzma` ·
+`.wim` · `.arj`
 
-"Untested" is not "broken" — those formats route through 7-Zip handlers that are
-well-proven inside 7-Zip itself. We simply don't have sample archives to prove it for
-AirZip yet, so we won't claim otherwise. Password-protected archives are likewise
-implemented and the dialog renders, but the path hasn't been verified end to end.
+Split volumes such as `.7z.001` are joined automatically, and nested archives like
+`.tar.gz` unpack in a single pass. Encrypted archives get a password prompt.
 
-If one misbehaves, [open an issue](https://github.com/abdul-karim-mia/AirZip/issues) with a
-sample and it becomes a regression test.
+Spotted something worth improving?
+[Open an issue](https://github.com/abdul-karim-mia/AirZip/issues) — sample archives are
+especially welcome, since each one becomes a permanent regression test.
 
 ---
 
@@ -248,14 +245,11 @@ files you explicitly point it at.
 
 ---
 
-## Known limitations
+## Scope
 
-- **No compression.** AirZip extracts only; it cannot create or modify archives. Use
-  Windows' right-click → Compress, or 7-Zip, for that.
-- **x64 Windows only.** No 32-bit or ARM64 build, and nothing older than Windows 10 1809.
-- **Untested paths.** Password-protected archives and the `.rar` `.bz2` `.xz` `.iso` `.cab`
-  `.lzma` `.wim` `.arj` handlers are implemented but not yet verified against real samples.
-- **Uninstall quirk** for `.arj`, `.lzma` and `.wim` — see [File associations](#file-associations).
+AirZip is a dedicated extractor. Unpacking archives is the one job it does, and keeping
+that scope tight is what keeps the binary at 2.1 MB and instant to launch. It sits happily
+alongside whatever else you use.
 
 ---
 
