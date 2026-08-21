@@ -1,0 +1,20 @@
+# Build artifacts
+native/out/*.exe
+native/out/*.obj
+native/out/*.res
+
+# MSIX build temp
+msix-build/verify/
+
+# Certificates (test and real private keys should never be committed)
+msix-certs/*.pfx
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+*.swp
+*.swo
+*~
