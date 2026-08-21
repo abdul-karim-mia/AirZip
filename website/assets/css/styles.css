@@ -116,9 +116,14 @@ h1, h2, h3, h4 {
   font-weight: 700;
 }
 
-h1 { font-size: clamp(2.4rem, 6vw, 4.1rem); letter-spacing: -0.04em; font-weight: 800; }
-h2 { font-size: clamp(1.85rem, 3.6vw, 2.7rem); letter-spacing: -0.035em; }
+/* Floors are set low enough that a 320px screen still gets a comfortable
+   measure; the vw term takes over from ~360px up. */
+h1 { font-size: clamp(1.95rem, 7vw, 4.1rem); letter-spacing: -0.04em; font-weight: 800; }
+h2 { font-size: clamp(1.5rem, 4.4vw, 2.7rem); letter-spacing: -0.035em; }
 h3 { font-size: 1.14rem; }
+
+/* Long words (paths, filenames, URLs) must never push the layout sideways. */
+h1, h2, h3, h4, p, li, td, th, summary { overflow-wrap: break-word; }
 
 code, kbd, pre { font-family: var(--mono); font-size: 0.875em; }
 
@@ -255,6 +260,9 @@ section { position: relative; }
 
 .nav-links a:hover { color: var(--text); background: var(--surface-hover); }
 .nav-links a[aria-current="page"] { color: var(--text); font-weight: 600; }
+
+/* Drawer-only CTA — revealed at the mobile breakpoint. */
+.nav-cta { display: none; }
 
 .nav-links a[aria-current="page"]::after {
   content: "";
@@ -744,6 +752,8 @@ section { position: relative; }
 
 .table-scroll {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--bg-elev);
@@ -856,6 +866,13 @@ td .no  { color: var(--text-faint); }
 }
 
 .shot:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+/* Very wide screenshots become unreadable when scaled to a phone, so let them
+   keep a legible size and scroll horizontally inside their own box instead. */
+@media (max-width: 700px) {
+  .shot--wide { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .shot--wide img { max-width: none; width: 680px; }
+}
 
 /* --- Checklist ------------------------------------------------------------ */
 
@@ -1187,13 +1204,33 @@ td .no  { color: var(--text-faint); }
     box-shadow: var(--shadow-md);
     transform-origin: top;
     animation: slideDown .25s ease;
+    max-height: calc(100vh - 64px);
+    max-height: calc(100dvh - 64px);
+    overflow-y: auto;
   }
 
   .nav-links[hidden] { display: none; }
-  .nav-links a { padding: 12px 14px; font-size: 1rem; }
+  .nav-links a { padding: 13px 14px; font-size: 1rem; }
   .nav-links a[aria-current="page"]::after { display: none; }
 
+  /* The header CTA is too wide to sit beside the hamburger, so it moves
+     into the drawer instead of disappearing on mobile. */
   .nav-store { display: none; }
+  .nav-cta { display: block; margin-top: 10px; }
+
+  /* `.nav-links a` is more specific than `.btn`, so the button styles have to
+     be restated here or the CTA renders as muted text on the blue fill. */
+  .nav-cta .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 22px;
+    border-radius: 11px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+  }
+
+  .nav-cta .btn:hover { color: #fff; background: var(--accent-hot); }
 
   .grid--3, .grid--2 { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
@@ -1201,10 +1238,59 @@ td .no  { color: var(--text-faint); }
   .cta .btn-row { flex-direction: column; }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 560px) {
+  /* Below this width several CTA labels are wider than the viewport, so let
+     them wrap rather than overflow. */
+  .btn { white-space: normal; text-align: center; }
+  .btn--lg { padding: 14px 20px; }
+
+  .dl-head { flex-wrap: wrap; }
+  .dl-tag { margin-left: 0; order: -1; }
+
+  .mockup-frame { padding: 22px 18px; }
+  .section-head { margin-bottom: 36px; }
+  .legend { gap: 12px; flex-direction: column; }
+
+  .faq summary { padding: 16px 18px; gap: 10px; }
+  .faq-body { padding: 0 18px 18px; }
+
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+
+@media (max-width: 480px) {
   .wrap { padding-inline: 18px; }
   .stats { grid-template-columns: 1fr; }
   .card { padding: 22px; }
+  .dl { padding: 22px; }
+  .cta { border-radius: 20px; }
+
+  .brand { font-size: 1rem; }
+  .brand img { width: 28px; height: 28px; }
+
+  .nav-inner { gap: 10px; padding: 10px 18px; }
+  .badge { font-size: .78rem; }
+
+  .toast { padding: 12px 13px; font-size: .8rem; }
+  .toast-bot { font-size: .72rem; }
+
+  .code pre { padding: 14px; font-size: .8rem; }
+  .code-head { padding: 9px 14px; }
+
+  th, td { padding: 12px 14px; }
+}
+
+/* Phones in landscape: the hero's vertical padding wastes most of the screen. */
+@media (max-height: 480px) and (orientation: landscape) {
+  .hero { padding-block: 36px 44px; }
+  .section { padding-block: 48px; }
+}
+
+/* Touch input: meet the 44px minimum target size. */
+@media (hover: none) and (pointer: coarse) {
+  .icon-btn { width: 44px; height: 44px; }
+  .pill { padding: 11px 16px; }
+  .toc a { padding: 10px 16px; }
+  .footer ul a { display: inline-block; padding-block: 4px; }
 }
 
 /* --- Motion preferences --------------------------------------------------- */
