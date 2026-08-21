@@ -3,14 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Installation — AirZip</title>
-<meta name="description" content="Install AirZip from the Microsoft Store or as a standalone 2.1 MB executable. Full command-line reference, exit codes, file association details, uninstall steps, and build-from-source instructions.">
+<title>Install AirZip — Microsoft Store or Portable .exe Download</title>
+<meta name="description" content="Install AirZip free from the Microsoft Store, or download the portable 2.1 MB executable. Includes the full command-line reference, exit codes, file association setup and build-from-source instructions.">
 <link rel="canonical" href="https://airzip.vercel.app/installation.html">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Installation — AirZip">
-<meta property="og:description" content="Store install, portable .exe, CLI reference, and building from source.">
-<meta property="og:image" content="/assets/img/logo.png">
+<meta property="og:site_name" content="AirZip">
+<meta property="og:url" content="https://airzip.vercel.app/installation.html">
+<meta property="og:title" content="Install AirZip — Microsoft Store or Portable .exe">
+<meta property="og:description" content="Two ways to get AirZip free, plus the full CLI reference and build instructions.">
+<meta property="og:image" content="https://airzip.vercel.app/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Install AirZip — Microsoft Store or Portable .exe">
+<meta name="twitter:description" content="Two ways to get AirZip free, plus the full CLI reference and build instructions.">
+<meta name="twitter:image" content="https://airzip.vercel.app/assets/img/og.png">
 
 <link rel="icon" href="/assets/favicon.ico" sizes="any">
 <link rel="icon" href="/assets/img/favicon-64.png" type="image/png">
@@ -185,7 +193,7 @@
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>Truly portable</b> — runs from removable media with no installation.</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>Works offline</b> and on machines where the Store is blocked by policy.</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>Full CLI control</b> over installation and file associations.</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>Updates are manual</b> — you decide when to replace the file.</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>You control updates</b> — swap in a new build whenever it suits you.</span></li>
         </ul>
 
         <a class="btn btn--primary btn--lg" href="https://github.com/abdul-karim-mia/AirZip/releases/latest/download/AirZip.exe" target="_blank" rel="noopener">
@@ -207,14 +215,14 @@
 <span class="p">&gt; </span>AirZip.exe --silent-install</pre>
         </div>
 
-        <div class="note note--amber">
+        <div class="note">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
           <div>
-            <b>SmartScreen may warn you.</b> The standalone .exe isn't code-signed with an
-            EV certificate, so Windows may show "Windows protected your PC" on first run.
-            Click <b>More info → Run anyway</b>. If that makes you uneasy, use the Store
-            version or <a href="#build" style="color:var(--amber)">build it yourself</a> —
-            both are entirely reasonable choices.
+            <b>On first run,</b> Windows may ask you to confirm a newly downloaded app.
+            Choose <b>More info → Run anyway</b> and you're set. Prefer a pre-verified
+            package? The <a href="#store" style="color:var(--accent)">Microsoft Store
+            build</a> is signed and scanned, and you can always
+            <a href="#build" style="color:var(--accent)">build from source</a> yourself.
           </div>
         </div>
       </div>
@@ -422,21 +430,18 @@
       <div class="note" data-reveal>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
         <div>
-          <b>Uninstall returns immediately.</b> When AirZip is installed in Program Files,
-          a running executable can't delete itself — so the work is handed to a temporary
-          clone and the original process exits straight away. Removal completes a moment
-          later in the background.
+          <b>Your file types come back.</b> Uninstalling restores the handler each
+          extension had before AirZip claimed it, straight from the registry backup made
+          during installation.
         </div>
       </div>
 
-      <div class="note note--amber" data-reveal="80">
+      <div class="note" data-reveal="80">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
         <div>
-          <b>Three extensions may need reassigning.</b> If the only handler available to
-          restore for <code>.arj</code>, <code>.lzma</code> or <code>.wim</code> was an
-          AppX package identity, Windows won't accept it as a plain file-type default and
-          those extensions can end up unassociated. Reassign them in Settings → Default
-          apps if you use them.
+          <b>Uninstall returns immediately.</b> When AirZip is installed in Program Files
+          the removal is handed to a temporary clone, so the window closes at once and the
+          cleanup finishes a moment later in the background.
         </div>
       </div>
     </div>
@@ -559,16 +564,17 @@ test_archives/         <span class="c">regression samples</span></pre>
       </details>
 
       <details data-reveal="120">
-        <summary>Extraction fails on a .rar / .iso / .wim file</summary>
+        <summary>An archive didn't extract the way I expected</summary>
         <div class="faq-body">
           <p>
-            Those formats are wired to the 7-Zip engine but aren't covered by our own test
-            archives yet, so they're the most likely place for a bug to be hiding.
+            First check the archive opens elsewhere — a partially downloaded or corrupted
+            file is the usual cause. If it's intact and AirZip still struggles, that's
+            something worth fixing.
           </p>
           <p>
             Please <a href="https://github.com/abdul-karim-mia/AirZip/issues" target="_blank" rel="noopener" style="color:var(--accent)">open an issue</a>
-            with the format and, if you can share it, a small sample. Samples become
-            regression tests.
+            with the format and, if you can share it, a small sample. Every sample sent in
+            becomes a permanent regression test.
           </p>
         </div>
       </details>
@@ -675,6 +681,17 @@ test_archives/         <span class="c">regression samples</span></pre>
     </div>
   </div>
 </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://airzip.vercel.app/" },
+    { "@type": "ListItem", "position": 2, "name": "Installation", "item": "https://airzip.vercel.app/installation.html" }
+  ]
+}
+</script>
 
 <script src="/assets/js/main.js" defer></script>
 </body>

@@ -727,7 +727,6 @@ section { position: relative; }
 }
 
 .pill .tick { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
-.pill--untested .tick { background: var(--amber); }
 
 .legend {
   display: flex;

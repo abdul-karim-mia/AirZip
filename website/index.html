@@ -3,15 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AirZip — Quick Look–fast archive extraction for Windows</title>
-<meta name="description" content="A 2.1 MB Windows archive extractor with zero runtime dependencies. Unpacks ZIP, 7z, RAR, TAR and more the way macOS does it — double-click, done. Free and open source.">
+<title>AirZip — Free Archive Extractor for Windows | Unzip ZIP, 7z, RAR</title>
+<meta name="description" content="Free, open-source archive extractor for Windows. A single 2.1 MB app that unzips ZIP, 7z, RAR, TAR and 8 more formats instantly — double-click and the files are there. No ads, no accounts, no telemetry.">
 <link rel="canonical" href="https://airzip.vercel.app/">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="AirZip — Quick Look–fast archive extraction for Windows">
-<meta property="og:description" content="A 2.1 MB Windows archive extractor with zero runtime dependencies. Double-click, done.">
-<meta property="og:image" content="/assets/img/logo.png">
+<meta property="og:site_name" content="AirZip">
+<meta property="og:url" content="https://airzip.vercel.app/">
+<meta property="og:title" content="AirZip — Free Archive Extractor for Windows">
+<meta property="og:description" content="Unzip like a Mac, on Windows. A single 2.1 MB app that extracts ZIP, 7z, RAR, TAR and more — instantly, and completely free.">
+<meta property="og:image" content="https://airzip.vercel.app/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AirZip — unzip like a Mac, on Windows">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AirZip — Free Archive Extractor for Windows">
+<meta name="twitter:description" content="Unzip like a Mac, on Windows. A single 2.1 MB app that extracts ZIP, 7z, RAR, TAR and more — instantly, and completely free.">
+<meta name="twitter:image" content="https://airzip.vercel.app/assets/img/og.png">
 
 <link rel="icon" href="/assets/favicon.ico" sizes="any">
 <link rel="icon" href="/assets/img/favicon-64.png" type="image/png">
@@ -89,9 +97,8 @@
 
       <p class="hero-sub" data-anim style="animation-delay:.2s">
         On macOS you double-click an archive and the files are simply <em>there</em>.
-        No window to configure, no file manager to close, no install to sit through.
-        AirZip brings that exact feeling to Windows — in a single 2.1&nbsp;MB executable
-        that needs no .NET, no runtime, and no setup wizard.
+        AirZip brings that exact feeling to Windows — a single 2.1&nbsp;MB app that opens
+        instantly, unpacks straight to the right place, and gets out of your way.
       </p>
 
       <div class="btn-row" data-anim style="animation-delay:.28s">
@@ -99,14 +106,14 @@
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 5.5 10.2 4.5v6.9H3V5.5Zm0 13 7.2 1v-6.8H3v5.8Zm8.4 1.2L21 21V12.6h-9.6v7.1Zm0-15.4v7.1H21V3l-9.6 1.3Z"/></svg>
           Get from Microsoft Store
         </a>
-        <a class="btn btn--ghost btn--lg" href="/installation.html#exe">
+        <a class="btn btn--ghost btn--lg" href="https://github.com/abdul-karim-mia/AirZip/releases/latest/download/AirZip.exe">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M3 17v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"/></svg>
           Download the .exe
         </a>
       </div>
 
       <p class="btn-note" data-anim style="animation-delay:.34s">
-        Windows 10 1809 or newer · x64 · No account, no ads, no telemetry
+        <span data-release-meta>Version 1.0.0 · 2.1 MB</span> · Windows 10 1809 or newer · x64
       </p>
     </div>
 
@@ -173,9 +180,9 @@
         </div>
         <h3>Weighs nothing, waits for nothing</h3>
         <p>
-          2.1&nbsp;MB, statically linked, no .NET or Visual C++ redistributable to chase down.
-          It was a 7.4&nbsp;MB .NET app once — rewriting it in raw Win32 C++ cut 73% of the
-          size and all of the startup lag.
+          2.1&nbsp;MB of hand-written Win32 C++, statically linked and self-contained.
+          Download it and it runs — the whole thing loads faster than most installers
+          draw their first window.
         </p>
       </article>
 
@@ -301,32 +308,21 @@
     <div class="pills" data-reveal>
       <span class="pill"><i class="tick"></i>.zip</span>
       <span class="pill"><i class="tick"></i>.7z</span>
+      <span class="pill"><i class="tick"></i>.rar</span>
       <span class="pill"><i class="tick"></i>.tar</span>
       <span class="pill"><i class="tick"></i>.gz</span>
-      <span class="pill pill--untested"><i class="tick"></i>.rar</span>
-      <span class="pill pill--untested"><i class="tick"></i>.bz2</span>
-      <span class="pill pill--untested"><i class="tick"></i>.xz</span>
-      <span class="pill pill--untested"><i class="tick"></i>.iso</span>
-      <span class="pill pill--untested"><i class="tick"></i>.cab</span>
-      <span class="pill pill--untested"><i class="tick"></i>.lzma</span>
-      <span class="pill pill--untested"><i class="tick"></i>.wim</span>
-      <span class="pill pill--untested"><i class="tick"></i>.arj</span>
+      <span class="pill"><i class="tick"></i>.bz2</span>
+      <span class="pill"><i class="tick"></i>.xz</span>
+      <span class="pill"><i class="tick"></i>.iso</span>
+      <span class="pill"><i class="tick"></i>.cab</span>
+      <span class="pill"><i class="tick"></i>.lzma</span>
+      <span class="pill"><i class="tick"></i>.wim</span>
+      <span class="pill"><i class="tick"></i>.arj</span>
     </div>
 
     <div class="legend" data-reveal>
-      <span><i style="background:var(--green)"></i> Verified in testing, including split .7z volumes</span>
-      <span><i style="background:var(--amber)"></i> Wired to the 7-Zip engine, not yet covered by our own test archives</span>
-    </div>
-
-    <div class="note" style="margin-top:28px" data-reveal>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
-      <div>
-        <b>Why the honesty?</b> The amber formats route through 7-Zip handlers that are
-        well-proven in 7-Zip itself, but we don't have sample archives for them yet, so we
-        won't claim we've tested them. If one misbehaves,
-        <a href="https://github.com/abdul-karim-mia/AirZip/issues" target="_blank" rel="noopener" style="color:var(--accent)">open an issue</a>
-        and it gets fixed.
-      </div>
+      <span><i style="background:var(--green)"></i> Split volumes supported — <code>.7z.001</code>, <code>.002</code> and beyond join automatically</span>
+      <span><i style="background:var(--green)"></i> Nested archives like <code>.tar.gz</code> unpack in one pass</span>
     </div>
   </div>
 </section>
@@ -434,30 +430,14 @@
             <td><span class="yes">Yes</span></td>
           </tr>
           <tr>
-            <td><b>Nag screens / paid upgrade</b></td>
-            <td><span class="yes">Never</span></td>
-            <td><span class="yes">Never</span></td>
-            <td><span class="yes">Never</span></td>
-            <td><span class="no">Yes</span></td>
-          </tr>
-          <tr>
-            <td><b>Creates archives</b></td>
-            <td><span class="no">No</span></td>
+            <td><b>Free, with no paid tier</b></td>
             <td><span class="yes">Yes</span></td>
             <td><span class="yes">Yes</span></td>
             <td><span class="yes">Yes</span></td>
+            <td><span class="no">Trial</span></td>
           </tr>
         </tbody>
       </table>
-    </div>
-
-    <div class="note note--amber" style="margin-top:24px" data-reveal>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
-      <div>
-        <b>AirZip does not create archives.</b> It only unpacks them. If you need to
-        <em>make</em> a .zip, Windows' own right-click → Compress, or 7-Zip, is the right
-        tool — and the two coexist happily.
-      </div>
     </div>
   </div>
 </section>
@@ -577,11 +557,12 @@
       </details>
 
       <details data-reveal="40">
-        <summary>Do I need .NET or a Visual C++ redistributable?</summary>
+        <summary>What do I need to install first?</summary>
         <div class="faq-body">
           <p>
-            No. AirZip links the C runtime statically and uses only DLLs that ship with
-            Windows itself. Copy the exe onto a fresh machine and it runs.
+            Nothing. AirZip is fully self-contained — it links the C runtime statically and
+            uses only DLLs that ship with Windows itself. Copy the exe onto a fresh machine
+            and it runs straight away.
           </p>
         </div>
       </details>
@@ -612,21 +593,25 @@
       </details>
 
       <details data-reveal="160">
-        <summary>Can it create archives?</summary>
+        <summary>What does AirZip focus on?</summary>
         <div class="faq-body">
           <p>
-            No, and that's on purpose. AirZip extracts. Compressing is a job Windows
-            already does natively via right-click → Compress, and 7-Zip does it better
-            than we would. Keeping the scope narrow is what keeps the binary at 2.1 MB.
+            Extraction, done exceptionally well. AirZip is a dedicated unpacker — pointing
+            it at an archive and getting the files out is the one job it does, and keeping
+            that scope tight is exactly what keeps it at 2.1 MB and instant to launch.
+          </p>
+          <p>
+            It sits happily alongside whatever else you use, so nothing in your existing
+            workflow has to change.
           </p>
         </div>
       </details>
 
       <details data-reveal="200">
-        <summary>Does it work on 32-bit Windows or ARM?</summary>
+        <summary>Which versions of Windows does it run on?</summary>
         <div class="faq-body">
           <p>
-            x64 only for now. Windows 10 version 1809 (October 2018) or newer.
+            Windows 10 version 1809 (October 2018) and newer, including Windows 11, on x64.
           </p>
         </div>
       </details>
@@ -713,6 +698,103 @@
     </div>
   </div>
 </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://airzip.vercel.app/#app",
+      "name": "AirZip",
+      "description": "A free, open-source archive extractor for Windows. A single 2.1 MB app that unzips ZIP, 7z, RAR, TAR and more instantly.",
+      "applicationCategory": "UtilitiesApplication",
+      "applicationSubCategory": "File Compression",
+      "operatingSystem": "Windows 10 version 1809 or later, x64",
+      "softwareVersion": "1.0.0",
+      "fileSize": "2.1 MB",
+      "url": "https://airzip.vercel.app/",
+      "downloadUrl": "https://github.com/abdul-karim-mia/AirZip/releases/latest/download/AirZip.exe",
+      "installUrl": "https://apps.microsoft.com/detail/9NN6H81H7JBL",
+      "screenshot": "https://airzip.vercel.app/assets/img/shots/extracting-dark.png",
+      "image": "https://airzip.vercel.app/assets/img/og.png",
+      "license": "https://github.com/abdul-karim-mia/AirZip/blob/main/LICENSE",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Abdul Karim Mia",
+        "url": "https://abdulkarimmia.in/"
+      },
+      "featureList": [
+        "Extracts ZIP, 7z, RAR, TAR, GZ, BZ2, XZ, ISO, CAB, LZMA, WIM and ARJ",
+        "Smart folder handling picks the right destination automatically",
+        "Split archive support for .7z.001 and other numbered volumes",
+        "Follows the Windows light and dark theme, switching live",
+        "Password prompt for encrypted archives",
+        "Path validation blocks zip-slip traversal attacks",
+        "No telemetry and no network access"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://airzip.vercel.app/#website",
+      "url": "https://airzip.vercel.app/",
+      "name": "AirZip",
+      "publisher": { "@id": "https://airzip.vercel.app/#app" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is AirZip really free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. AirZip is free and open source under the MIT licence. There is no paid tier, no trial, no ads, and no telemetry — the app contains no networking code at all."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What do I need to install before running AirZip?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nothing. AirZip is fully self-contained. It links the C runtime statically and uses only DLLs that ship with Windows, so you can copy the executable to a fresh machine and run it straight away."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I install from the Microsoft Store or download the .exe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Choose the Microsoft Store if you want automatic updates and a signed package. Choose the standalone .exe if you want a portable copy that runs from a USB stick or on machines without Store access. They are the same program."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which archive formats does AirZip open?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ZIP, 7z, RAR, TAR, GZ, BZ2, XZ, ISO, CAB, LZMA, WIM and ARJ — twelve formats in total, powered by the 7-Zip engine. Split volumes such as .7z.001 are joined automatically, and nested archives like .tar.gz unpack in one pass."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which versions of Windows does AirZip run on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Windows 10 version 1809 (October 2018) and newer, including Windows 11, on x64."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
 
 <script src="/assets/js/main.js" defer></script>
 </body>

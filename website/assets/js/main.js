@@ -214,6 +214,31 @@
     stats.forEach(function (el) { statObserver.observe(el); });
   }
 
+  /* --- Latest release metadata ------------------------------------------- */
+  // The download links themselves point at GitHub's /releases/latest/download/
+  // redirect, so they never go stale on their own. This only refreshes the
+  // version and size *label*, and leaves the server-rendered text if it fails.
+
+  var meta = document.querySelector("[data-release-meta]");
+  if (meta && "fetch" in window) {
+    fetch("https://api.github.com/repos/abdul-karim-mia/AirZip/releases/latest", {
+      headers: { Accept: "application/vnd.github+json" }
+    })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(function (data) {
+        var tag = (data.tag_name || "").replace(/^v/, "");
+        var exe = (data.assets || []).filter(function (a) {
+          return /\.exe$/i.test(a.name);
+        })[0];
+        if (!tag) return;
+
+        var text = "Version " + tag;
+        if (exe && exe.size) text += " · " + (exe.size / 1048576).toFixed(1) + " MB";
+        meta.textContent = text;
+      })
+      .catch(function () { /* rate limited or offline — keep the static label */ });
+  }
+
   /* --- Footer year ------------------------------------------------------- */
 
   var year = document.querySelector("[data-year]");

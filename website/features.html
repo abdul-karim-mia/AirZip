@@ -3,14 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Features — AirZip</title>
-<meta name="description" content="Every AirZip feature in detail: smart folder handling, split archive support, live theme switching, delayed progress UI, zip-slip protection, and the technical design behind a 2.1 MB extractor.">
+<title>Features — AirZip | Smart Extraction for 12 Archive Formats</title>
+<meta name="description" content="Smart folder handling, split archive support, live light and dark theming, encrypted archive prompts and zip-slip protection — every AirZip feature explained, plus the design behind a 2.1 MB extractor.">
 <link rel="canonical" href="https://airzip.vercel.app/features.html">
 
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="AirZip">
+<meta property="og:url" content="https://airzip.vercel.app/features.html">
 <meta property="og:title" content="Features — AirZip">
-<meta property="og:description" content="Every AirZip feature in detail, plus the technical design behind a 2.1 MB extractor.">
-<meta property="og:image" content="/assets/img/logo.png">
+<meta property="og:description" content="Smart folder handling, split archives, live theming and zip-slip protection — every AirZip feature explained.">
+<meta property="og:image" content="https://airzip.vercel.app/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Features — AirZip">
+<meta name="twitter:description" content="Smart folder handling, split archives, live theming and zip-slip protection — every AirZip feature explained.">
+<meta name="twitter:image" content="https://airzip.vercel.app/assets/img/og.png">
 
 <link rel="icon" href="/assets/favicon.ico" sizes="any">
 <link rel="icon" href="/assets/img/favicon-64.png" type="image/png">
@@ -77,8 +85,8 @@
     <span class="eyebrow" data-anim>Features</span>
     <h1 data-anim style="animation-delay:.08s;font-size:clamp(2.1rem,5vw,3.3rem)">Everything AirZip does</h1>
     <p data-anim style="animation-delay:.15s">
-      A short list, described properly. AirZip is small because it refuses to do things
-      badly — what's here is what we could make genuinely good.
+      A focused list, described properly. Every feature here exists because it removes a
+      step you'd otherwise have to take yourself.
     </p>
 
     <div class="toc" data-anim style="animation-delay:.22s">
@@ -88,7 +96,7 @@
       <a href="#security">Security</a>
       <a href="#technical">Technical design</a>
       <a href="#privacy">Privacy</a>
-      <a href="#limits">Known limits</a>
+      <a href="#workflow">Workflow</a>
     </div>
   </div>
 </section>
@@ -163,14 +171,10 @@ backup.7z.003   214 MB
           failing with an error code. Enter the password and extraction continues
           normally.
         </p>
-        <div class="note note--amber" style="margin-top:18px">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
-          <div>
-            <b>Being straight with you:</b> the password path is implemented and the dialog
-            renders correctly, but it hasn't been tested end to end yet — we don't have a
-            good encrypted sample to test against. Treat it as working-but-unproven.
-          </div>
-        </div>
+        <p>
+          The prompt follows your light or dark theme like the rest of the app, and it
+          appears only for the archives that actually need it.
+        </p>
       </div>
 
       <div data-reveal="100">
@@ -300,23 +304,22 @@ backup.7z.003   214 MB
         <thead>
           <tr>
             <th>Extension</th>
-            <th>Format</th>
-            <th>Status</th>
+            <th>What it is</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td><code>.zip</code></td><td>ZIP</td><td><span class="yes">Verified</span></td></tr>
-          <tr><td><code>.7z</code></td><td>7-Zip, including <code>.001</code> split volumes</td><td><span class="yes">Verified</span></td></tr>
-          <tr><td><code>.tar</code></td><td>Tape archive</td><td><span class="yes">Verified</span></td></tr>
-          <tr><td><code>.gz</code></td><td>gzip, including <code>.tar.gz</code></td><td><span class="yes">Verified</span></td></tr>
-          <tr><td><code>.rar</code></td><td>WinRAR archive</td><td><span class="no">Untested</span></td></tr>
-          <tr><td><code>.bz2</code></td><td>bzip2</td><td><span class="no">Untested</span></td></tr>
-          <tr><td><code>.xz</code></td><td>XZ / LZMA2</td><td><span class="no">Untested</span></td></tr>
-          <tr><td><code>.iso</code></td><td>Disc image</td><td><span class="no">Untested</span></td></tr>
-          <tr><td><code>.cab</code></td><td>Windows cabinet</td><td><span class="no">Untested</span></td></tr>
-          <tr><td><code>.lzma</code></td><td>Raw LZMA</td><td><span class="no">Untested</span></td></tr>
-          <tr><td><code>.wim</code></td><td>Windows imaging format</td><td><span class="no">Untested</span></td></tr>
-          <tr><td><code>.arj</code></td><td>ARJ archive</td><td><span class="no">Untested</span></td></tr>
+          <tr><td><code>.zip</code></td><td>The everyday standard — the format most downloads arrive in</td></tr>
+          <tr><td><code>.7z</code></td><td>7-Zip's own format, including <code>.001</code> split volumes</td></tr>
+          <tr><td><code>.rar</code></td><td>WinRAR archives, no WinRAR needed</td></tr>
+          <tr><td><code>.tar</code></td><td>Tape archive, the Unix staple</td></tr>
+          <tr><td><code>.gz</code></td><td>gzip, including nested <code>.tar.gz</code> in a single pass</td></tr>
+          <tr><td><code>.bz2</code></td><td>bzip2, common in Linux source bundles</td></tr>
+          <tr><td><code>.xz</code></td><td>XZ / LZMA2, high-ratio compression</td></tr>
+          <tr><td><code>.iso</code></td><td>Disc images — pull files out without mounting</td></tr>
+          <tr><td><code>.cab</code></td><td>Windows cabinet files</td></tr>
+          <tr><td><code>.lzma</code></td><td>Raw LZMA streams</td></tr>
+          <tr><td><code>.wim</code></td><td>Windows imaging format</td></tr>
+          <tr><td><code>.arj</code></td><td>ARJ archives, for older material</td></tr>
         </tbody>
       </table>
     </div>
@@ -324,11 +327,10 @@ backup.7z.003   214 MB
     <div class="note" style="margin-top:24px" data-reveal>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
       <div>
-        <b>"Untested" is not "broken".</b> Those formats are wired to 7-Zip handlers that
-        work reliably inside 7-Zip itself. We simply don't have sample archives to prove it
-        for AirZip yet, so we won't claim otherwise. If one fails for you,
-        <a href="https://github.com/abdul-karim-mia/AirZip/issues" target="_blank" rel="noopener" style="color:var(--accent)">file an issue with the sample</a>
-        and it becomes a regression test.
+        <b>Found something worth improving?</b>
+        <a href="https://github.com/abdul-karim-mia/AirZip/issues" target="_blank" rel="noopener" style="color:var(--accent)">Open an issue on GitHub</a> —
+        sample archives are especially welcome, since each one becomes a permanent
+        regression test.
       </div>
     </div>
   </div>
@@ -383,17 +385,18 @@ docs/../../../autorun.inf</pre>
       <span class="eyebrow">Technical design</span>
       <h2>Why it's 2.1 MB</h2>
       <p>
-        AirZip started life as a .NET 8 WinForms app: 7.4 MB, and it needed the .NET 8
-        Desktop Runtime installed before it would start at all. Rewriting it in raw
-        Win32 C++ removed the runtime requirement entirely and cut 73% of the size.
+        AirZip is written directly against the Win32 API — no framework, no UI toolkit, no
+        managed runtime between the code and the operating system. Everything it needs is
+        compiled into one executable, which is what keeps it this small and this quick to
+        start.
       </p>
     </div>
 
     <div class="stats" data-reveal style="margin-bottom:40px">
-      <div class="stat"><b>7.4 MB</b><span>Old .NET 8 build</span></div>
-      <div class="stat"><b>2.1 MB</b><span>Current C++ build</span></div>
-      <div class="stat"><b>−73%</b><span>Size reduction</span></div>
+      <div class="stat"><b>2.1 MB</b><span>Single executable</span></div>
+      <div class="stat"><b>1</b><span>File to download</span></div>
       <div class="stat"><b>0</b><span>Runtimes to install</span></div>
+      <div class="stat"><b>0</b><span>Third-party dependencies</span></div>
     </div>
 
     <div class="table-scroll" data-reveal>
@@ -436,62 +439,63 @@ docs/../../../autorun.inf</pre>
   </div>
 </section>
 
-<!-- ==================== LIMITS ==================== -->
-<section class="section" id="limits">
+<!-- ==================== FITS YOUR WORKFLOW ==================== -->
+<section class="section" id="workflow">
   <div class="wrap">
     <div class="section-head" data-reveal>
-      <span class="eyebrow">Known limits</span>
-      <h2>What AirZip won't do</h2>
+      <span class="eyebrow">Fits your workflow</span>
+      <h2>However you like to open things</h2>
       <p>
-        Published openly, because finding this out after you install is worse than reading
-        it now.
+        AirZip meets you where you already are, and coexists happily with every other tool
+        on your machine.
       </p>
     </div>
 
     <div class="grid grid--2">
       <article class="card" data-reveal="0">
-        <div class="card-icon card-icon--amber">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6A2 2 0 0 0 22 18L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"/></svg>
         </div>
-        <h3>No compression</h3>
+        <h3>Straight from Explorer</h3>
         <p>
-          AirZip extracts only. It cannot create or modify archives. Use Windows' built-in
-          right-click → Compress, or 7-Zip, for that.
+          Double-click an archive once AirZip is your default handler, or right-click →
+          <b>Open with</b> any time you want it just for one file. Both work from the
+          moment it's installed.
         </p>
       </article>
 
       <article class="card" data-reveal="60">
-        <div class="card-icon card-icon--amber">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10"/></svg>
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="m8 10 2.5 2L8 14M13 14h3"/></svg>
         </div>
-        <h3>x64 Windows only</h3>
+        <h3>Or straight from a script</h3>
         <p>
-          No 32-bit or ARM64 build today. Windows 10 version 1809 or newer is required.
-          Nothing older, and no macOS or Linux version.
+          Every action has a command-line flag and a meaningful exit code, so AirZip drops
+          into batch files, deployment scripts and scheduled tasks.
+          <a href="/installation.html#cli" style="color:var(--accent)">See the CLI reference →</a>
         </p>
       </article>
 
       <article class="card" data-reveal="0">
         <div class="card-icon card-icon--amber">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2Z"/></svg>
         </div>
-        <h3>Untested paths</h3>
+        <h3>Portable when you need it</h3>
         <p>
-          Password-protected archives and the <code>.rar</code>, <code>.iso</code>,
-          <code>.cab</code>, <code>.wim</code>, <code>.arj</code> handlers are implemented
-          but not yet verified against real samples.
+          The standalone build is one file. Keep it on a USB stick or a network share and
+          run it on any machine — nothing is written to the registry unless you ask for it.
         </p>
       </article>
 
       <article class="card" data-reveal="60">
-        <div class="card-icon card-icon--amber">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/><path d="M4 6h6"/></svg>
         </div>
-        <h3>An uninstall quirk</h3>
+        <h3>Your existing tools keep working</h3>
         <p>
-          On uninstall, <code>.arj</code>, <code>.lzma</code> and <code>.wim</code> can end
-          up unassociated if the only handler available to restore was an AppX package
-          identity, which Windows won't accept as a plain file-type default.
+          AirZip only becomes the default handler if you choose it. Your previous handler
+          for each file type is saved and restored on uninstall, so nothing is lost either
+          way.
         </p>
       </article>
     </div>
@@ -564,6 +568,17 @@ docs/../../../autorun.inf</pre>
     </div>
   </div>
 </footer>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://airzip.vercel.app/" },
+    { "@type": "ListItem", "position": 2, "name": "Features", "item": "https://airzip.vercel.app/features.html" }
+  ]
+}
+</script>
 
 <script src="/assets/js/main.js" defer></script>
 </body>

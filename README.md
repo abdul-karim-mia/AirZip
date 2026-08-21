@@ -204,9 +204,9 @@ installation roots directly, avoiding `vswhere` because of cmd.exe's parentheses
 
 ## How it's built
 
-AirZip began as a .NET 8 WinForms application: 7.4 MB, and it needed the .NET 8 Desktop
-Runtime installed before it would start at all. Rewriting it in raw Win32 C++ removed the
-runtime requirement entirely and cut 73% of the size.
+AirZip is written directly against the Win32 API — no framework, no UI toolkit, nothing
+between the code and the operating system. Everything it needs is compiled into one
+executable, which is what keeps it this small and this quick to start.
 
 | | |
 |---|---|
