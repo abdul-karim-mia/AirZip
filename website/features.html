@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Features — AirZip | Smart Extraction for 12 Archive Formats</title>
+<title>AirZip Features | Smart Extraction for 12 Formats</title>
 <meta name="description" content="Smart folder handling, split archive support, live light/dark theming and zip-slip protection - every AirZip feature, plus the design behind a 2.1 MB app.">
 <link rel="canonical" href="https://airzip.vercel.app/features.html">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AirZip">
 <meta property="og:url" content="https://airzip.vercel.app/features.html">
-<meta property="og:title" content="Features — AirZip">
-<meta property="og:description" content="Smart folder handling, split archives, live theming and zip-slip protection — every AirZip feature explained.">
+<meta property="og:title" content="Features | AirZip">
+<meta property="og:description" content="Smart folder handling, split archives, live theming and zip-slip protection. Every AirZip feature explained.">
 <meta property="og:image" content="https://airzip.vercel.app/assets/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Features — AirZip">
-<meta name="twitter:description" content="Smart folder handling, split archives, live theming and zip-slip protection — every AirZip feature explained.">
+<meta name="twitter:title" content="Features | AirZip">
+<meta name="twitter:description" content="Smart folder handling, split archives, live theming and zip-slip protection. Every AirZip feature explained.">
 <meta name="twitter:image" content="https://airzip.vercel.app/assets/img/og.png">
 
 <link rel="icon" href="/assets/favicon.ico" sizes="any">
@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/styles.css?v=2">
+<link rel="stylesheet" href="/assets/css/styles.css?v=3">
 
 <script>
   (function () {
@@ -119,7 +119,7 @@
           same and let you deal with the mess.
         </p>
         <p>
-          AirZip looks first. <b>One root item</b> — a folder or a lone file — and it
+          AirZip looks first. <b>One root item</b>, a folder or a lone file, and it
           extracts <em>beside</em> the archive, because the archive already did the
           organising. <b>Several root items</b> and it creates a folder named after the
           archive to hold them.
@@ -146,7 +146,7 @@
         </p>
         <p>
           Point AirZip at any part and it locates the rest, then presents them to the
-          7-Zip engine through a single spanning stream — as if the archive had never been
+          7-Zip engine through a single spanning stream, as if the archive had never been
           split. Progress and byte counts reflect the whole set, not one volume.
         </p>
       </div>
@@ -186,7 +186,7 @@ backup.7z.003   214 MB
         </p>
         <p>
           It's also UTF-8 code page aware, which means filenames in Japanese, Arabic,
-          Cyrillic, emoji — whatever the archive contains — come out with their names
+          Cyrillic, emoji, whatever the archive contains, come out with their names
           intact rather than as mojibake.
         </p>
       </div>
@@ -220,7 +220,7 @@ backup.7z.003   214 MB
         <h3>400 ms of patience</h3>
         <p>
           The progress window doesn't appear immediately. AirZip waits 400 milliseconds
-          first — long enough that small archives finish silently and never flash a window
+          first, long enough that small archives finish silently and never flash a window
           at you. Only work that's actually going to take a moment gets a window.
         </p>
       </article>
@@ -233,7 +233,7 @@ backup.7z.003   214 MB
         <p>
           AirZip reads your Windows light/dark preference at launch and keeps listening.
           Change your theme while an extraction is running and the window redraws in the
-          new palette immediately — no restart, no half-dark window.
+          new palette immediately: no restart, no half-dark window.
         </p>
       </article>
 
@@ -245,7 +245,7 @@ backup.7z.003   214 MB
         <p>
           The progress bar colour is read from your DWM accent setting, so it matches the
           rest of your desktop. When extraction completes it plays
-          <code>SystemAsterisk</code> — which means if you've silenced that in your Sound
+          <code>SystemAsterisk</code>, which means if you've silenced that in your Sound
           scheme, AirZip stays quiet too.
         </p>
       </article>
@@ -268,7 +268,7 @@ backup.7z.003   214 MB
         </div>
         <h3>Progress that means something</h3>
         <p>
-          Current filename, percentage, and bytes done against the total — updated as it
+          Current filename, percentage, and bytes done against the total, updated as it
           goes. Enough to know whether to wait or go make tea, and nothing beyond that.
         </p>
       </article>
@@ -309,14 +309,14 @@ backup.7z.003   214 MB
           </tr>
         </thead>
         <tbody>
-          <tr><td><code>.zip</code></td><td>The everyday standard — the format most downloads arrive in</td></tr>
+          <tr><td><code>.zip</code></td><td>The everyday standard, the format most downloads arrive in</td></tr>
           <tr><td><code>.7z</code></td><td>7-Zip's own format, including <code>.001</code> split volumes</td></tr>
           <tr><td><code>.rar</code></td><td>WinRAR archives, no WinRAR needed</td></tr>
           <tr><td><code>.tar</code></td><td>Tape archive, the Unix staple</td></tr>
           <tr><td><code>.gz</code></td><td>gzip, including nested <code>.tar.gz</code> in a single pass</td></tr>
           <tr><td><code>.bz2</code></td><td>bzip2, common in Linux source bundles</td></tr>
           <tr><td><code>.xz</code></td><td>XZ / LZMA2, high-ratio compression</td></tr>
-          <tr><td><code>.iso</code></td><td>Disc images — pull files out without mounting</td></tr>
+          <tr><td><code>.iso</code></td><td>Disc images: pull files out without mounting</td></tr>
           <tr><td><code>.cab</code></td><td>Windows cabinet files</td></tr>
           <tr><td><code>.lzma</code></td><td>Raw LZMA streams</td></tr>
           <tr><td><code>.wim</code></td><td>Windows imaging format</td></tr>
@@ -329,8 +329,8 @@ backup.7z.003   214 MB
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 16v-5M12 8h.01"/></svg>
       <div>
         <b>Found something worth improving?</b>
-        <a href="https://github.com/abdul-karim-mia/AirZip/issues" target="_blank" rel="noopener" style="color:var(--accent)">Open an issue on GitHub</a> —
-        sample archives are especially welcome, since each one becomes a permanent
+        <a href="https://github.com/abdul-karim-mia/AirZip/issues" target="_blank" rel="noopener" style="color:var(--accent)">Open an issue on GitHub</a>.
+        Sample archives are especially welcome, since each one becomes a permanent
         regression test.
       </div>
     </div>
@@ -346,7 +346,7 @@ backup.7z.003   214 MB
       <p style="color:var(--text-muted)">
         An archive is a file someone else made. It can name its entries anything at all,
         including paths that climb out of the folder you chose and land somewhere
-        important. That attack has a name — <b>zip slip</b> — and it has hit a long list
+        important. That attack has a name, <b>zip slip</b>, and it has hit a long list
         of otherwise-careful software.
       </p>
       <p style="color:var(--text-muted)">
@@ -371,7 +371,7 @@ docs/../../../autorun.inf</pre>
       </div>
 
       <ul class="checks">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>Runs as you, not as admin.</b> The manifest requests <code>asInvoker</code> — extraction never silently elevates. Only installing file associations asks for elevation, because it writes to HKLM.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>Runs as you, not as admin.</b> The manifest requests <code>asInvoker</code>, so extraction never silently elevates. Only installing file associations asks for elevation, because it writes to HKLM.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>No network surface.</b> There is no socket code in the binary, so there is no remote attack surface to speak of.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12 5 5L20 6"/></svg><span><b>Auditable in one sitting.</b> The whole program is a single C++ source file you can read yourself.</span></li>
       </ul>
@@ -386,7 +386,7 @@ docs/../../../autorun.inf</pre>
       <span class="eyebrow">Technical design</span>
       <h2>Why it's 2.1 MB</h2>
       <p>
-        AirZip is written directly against the Win32 API — no framework, no UI toolkit, no
+        AirZip is written directly against the Win32 API: no framework, no UI toolkit, no
         managed runtime between the code and the operating system. Everything it needs is
         compiled into one executable, which is what keeps it this small and this quick to
         start.
@@ -403,14 +403,14 @@ docs/../../../autorun.inf</pre>
     <div class="table-scroll" data-reveal>
       <table>
         <tbody>
-          <tr><td style="width:38%"><b>Language</b></td><td>C++ against the raw Win32 API — no framework, no UI toolkit</td></tr>
+          <tr><td style="width:38%"><b>Language</b></td><td>C++ against the raw Win32 API, with no framework or UI toolkit</td></tr>
           <tr><td><b>Extraction engine</b></td><td>7-Zip via its COM interfaces (<code>7z.dll</code>, 1.8 MB, embedded as an RCDATA resource)</td></tr>
-          <tr><td><b>C runtime</b></td><td>Linked statically — no Visual C++ redistributable needed</td></tr>
+          <tr><td><b>C runtime</b></td><td>Linked statically, so no Visual C++ redistributable is needed</td></tr>
           <tr><td><b>System DLLs used</b></td><td><code>ole32</code>, <code>oleaut32</code>, <code>shell32</code>, <code>dwmapi</code>, <code>uxtheme</code>, <code>winmm</code>, <code>advapi32</code>, <code>user32</code>, <code>gdi32</code>, <code>kernel32</code></td></tr>
           <tr><td><b>Third-party dependencies</b></td><td>None beyond 7-Zip itself</td></tr>
           <tr><td><b>DPI</b></td><td>Per-monitor aware v2</td></tr>
           <tr><td><b>Paths</b></td><td>Long-path aware, UTF-8 code page aware</td></tr>
-          <tr><td><b>Subsystem</b></td><td>GUI — so <code>cmd.exe</code> returns immediately; use <code>start /wait</code> when you need the exit code</td></tr>
+          <tr><td><b>Subsystem</b></td><td>GUI, so <code>cmd.exe</code> returns immediately; use <code>start /wait</code> when you need the exit code</td></tr>
           <tr><td><b>Architecture</b></td><td>x64 only</td></tr>
           <tr><td><b>Minimum OS</b></td><td>Windows 10 version 1809 (build 17763)</td></tr>
           <tr><td><b>Source</b></td><td>One file: <code>native/airzip.cpp</code></td></tr>
@@ -426,7 +426,7 @@ docs/../../../autorun.inf</pre>
     <div class="section-head section-head--center" data-reveal>
       <span class="eyebrow">Privacy</span>
       <h2>The shortest privacy policy you'll read</h2>
-      <p>Everything below is about <b>the app</b> — the thing that runs on your machine.</p>
+      <p>Everything below is about <b>the app</b>, the thing that runs on your machine.</p>
     </div>
 
     <div class="card" style="padding:36px" data-reveal>
@@ -495,7 +495,7 @@ docs/../../../autorun.inf</pre>
         <h3>Portable when you need it</h3>
         <p>
           The standalone build is one file. Keep it on a USB stick or a network share and
-          run it on any machine — nothing is written to the registry unless you ask for it.
+          run it on any machine. Nothing is written to the registry unless you ask for it.
         </p>
       </article>
 
@@ -517,7 +517,7 @@ docs/../../../autorun.inf</pre>
 <!-- ==================== CTA ==================== -->
 <section class="wrap" style="padding-block:clamp(56px,8vw,96px)">
   <div class="cta" data-reveal>
-    <h2>Try it — it's 2.1 MB</h2>
+    <h2>Try it. It's 2.1 MB</h2>
     <p>Smaller than the screenshot you're looking at was before we compressed it.</p>
     <div class="btn-row">
       <a class="btn btn--primary btn--lg" href="https://apps.microsoft.com/detail/9NN6H81H7JBL" target="_blank" rel="noopener">
@@ -575,8 +575,8 @@ docs/../../../autorun.inf</pre>
     </div>
 
     <div class="footer-bottom">
-      <span>© <span data-year>2026</span> <a href="https://abdulkarimmia.in/" target="_blank" rel="noopener">Abdul Karim Mia</a> · Built with Win32 C++</span>
-      <span>Powered by the 7-Zip engine (LGPL) — 7z.dll © 1999–2024 Igor Pavlov</span>
+      <span>© <span data-year>2026</span> <a href="https://abdulkarimmia.in/" target="_blank" rel="noopener">Abdul Karim Mia</a> | Built with Win32 C++</span>
+      <span>Powered by the 7-Zip engine (LGPL) | 7z.dll © 1999-2024 Igor Pavlov</span>
     </div>
   </div>
 </footer>
@@ -592,7 +592,7 @@ docs/../../../autorun.inf</pre>
 }
 </script>
 
-<script src="/assets/js/main.js?v=2" defer></script>
+<script src="/assets/js/main.js?v=3" defer></script>
 
 <!-- Vercel Web Analytics (page views) and Speed Insights (Core Web Vitals).
      Both are cookieless, store no personal data, and do no cross-site tracking.

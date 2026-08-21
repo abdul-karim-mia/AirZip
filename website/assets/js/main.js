@@ -131,17 +131,38 @@
     var elLabel = toast.querySelector(".toast-label");
     var elBytes = toast.querySelector(".toast-bytes");
 
+    // Stepped through one at a time as the bar fills, so the preview reads like
+    // a real archive being unpacked rather than a single frozen filename.
     var files = [
-      "IMG_1102.jpg", "IMG_1147.jpg", "clip_0034.mp4",
-      "notes.md", "budget_final.xlsx", "IMG_1220.jpg"
+      "IMG_1102.jpg",
+      "IMG_1103.jpg",
+      "IMG_1147.jpg",
+      "day1/DSC_0091.raw",
+      "day1/DSC_0092.raw",
+      "clip_0034.mp4",
+      "sunset_pano.heic",
+      "day2/DSC_0130.raw",
+      "day2/DSC_0131.raw",
+      "clip_0041.mp4",
+      "receipts/hotel.pdf",
+      "receipts/flights.pdf",
+      "map_route.gpx",
+      "packing_list.txt",
+      "budget_final.xlsx",
+      "playlist.m3u",
+      "notes.md",
+      "IMG_1220.jpg",
+      "IMG_1221.jpg",
+      "README.txt"
     ];
 
     var TOTAL = 520.0;   // MB, matches the sample archive in the screenshots
     var pct = 0;
+    var lastIndex = -1;
     var timer;
 
     var frame = function () {
-      pct += 0.9 + Math.random() * 2.4;
+      pct += 0.7 + Math.random() * 1.7;
 
       if (pct >= 100) {
         pct = 100;
@@ -155,6 +176,7 @@
         clearInterval(timer);
         setTimeout(function () {           // hold on "done", then loop
           pct = 0;
+          lastIndex = -1;
           toast.classList.remove("is-done");
           elLabel.textContent = "Extracting to Family_Vacation_v2...";
           run();
@@ -162,14 +184,20 @@
         return;
       }
 
+      // Advance the filename only when the bucket actually changes, so each
+      // entry in the list gets its own readable moment on screen.
       var i = Math.min(files.length - 1, Math.floor(pct / 100 * files.length));
-      elFile.textContent = files[i];
+      if (i !== lastIndex) {
+        elFile.textContent = files[i];
+        lastIndex = i;
+      }
+
       elPct.textContent = Math.floor(pct) + "%";
       elFill.style.width = pct + "%";
       elBytes.textContent = (TOTAL * pct / 100).toFixed(1) + " / " + TOTAL.toFixed(1) + " MB";
     };
 
-    var run = function () { timer = setInterval(frame, 90); };
+    var run = function () { timer = setInterval(frame, 110); };
 
     // Only animate while the mockup is actually on screen.
     if ("IntersectionObserver" in window) {

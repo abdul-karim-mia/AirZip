@@ -133,7 +133,10 @@ code:not(pre code) {
   border-radius: 6px;
   border: 1px solid var(--border);
   color: var(--accent);
-  white-space: nowrap;
+  /* Never `white-space: nowrap` here. A long inline path such as
+     HKLM\SOFTWARE\AirZip\Associations then has an unshrinkable min-content
+     width, which drags its whole grid column past the viewport. */
+  overflow-wrap: break-word;
 }
 
 kbd {
@@ -313,8 +316,8 @@ section { position: relative; }
   align-items: center;
   justify-content: center;
   gap: 9px;
-  padding: 12px 22px;
-  border-radius: 11px;
+  padding: 9px 20px;
+  border-radius: 10px;
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -345,7 +348,7 @@ section { position: relative; }
 
 .btn--ghost:hover { background: var(--surface-hover); border-color: var(--border-strong); }
 
-.btn--lg { padding: 15px 28px; font-size: 1rem; border-radius: 13px; }
+.btn--lg { padding: 11px 24px; font-size: 1rem; border-radius: 11px; }
 
 .btn-row {
   display: flex;
@@ -548,7 +551,7 @@ section { position: relative; }
   white-space: nowrap;
 }
 
-.toast-pct { font-weight: 700; color: var(--toast-fg); font-variant-numeric: tabular-nums; }
+.toast-pct { font-weight: 700; color: var(--toast-fg); font-variant-numeric: tabular-nums; flex-shrink: 0; }
 
 .toast-bar {
   height: 6px;
@@ -629,6 +632,22 @@ section { position: relative; }
 .grid { display: grid; gap: 20px; }
 .grid--3 { grid-template-columns: repeat(3, 1fr); }
 .grid--2 { grid-template-columns: repeat(2, 1fr); }
+
+/* Grid and flex children size to `min-width: auto` by default, meaning a wide
+   descendant (code block, table, long path) sets a floor the track cannot go
+   below and the layout escapes the viewport. Opt every container out. */
+.grid > *,
+.split > *,
+.hero-grid > *,
+.stats > *,
+.footer-grid > *,
+.steps > *,
+.btn-row > *,
+.checks li > span,
+.note > div,
+.dl-head > h3,
+.toast-top > *,
+.toast-bot > span { min-width: 0; }
 
 .card {
   position: relative;
@@ -1223,8 +1242,8 @@ td .no  { color: var(--text-faint); }
   .nav-cta .btn {
     width: 100%;
     justify-content: center;
-    padding: 13px 22px;
-    border-radius: 11px;
+    padding: 10px 20px;
+    border-radius: 10px;
     font-weight: 600;
     color: #fff;
     background: var(--accent);
@@ -1242,7 +1261,7 @@ td .no  { color: var(--text-faint); }
   /* Below this width several CTA labels are wider than the viewport, so let
      them wrap rather than overflow. */
   .btn { white-space: normal; text-align: center; }
-  .btn--lg { padding: 14px 20px; }
+  .btn--lg { padding: 10px 18px; }
 
   .dl-head { flex-wrap: wrap; }
   .dl-tag { margin-left: 0; order: -1; }
