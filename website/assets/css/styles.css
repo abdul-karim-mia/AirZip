@@ -451,17 +451,20 @@ section { position: relative; }
    ------------------------------------------------------------------------- */
 
 :root {
-  --mk-frame:        linear-gradient(160deg, #eef2f8 0%, #e3e9f2 100%);
-  --mk-frame-border: rgba(13, 27, 47, 0.10);
-  --mk-chrome:       rgba(13, 27, 47, 0.42);
+  /* The frame stands in for the desktop behind the app, so it must sit clearly
+     darker than the page background (--bg) while the toast sits clearly lighter
+     than the frame. Three distinct steps, or the mockup reads as unthemed. */
+  --mk-frame:        linear-gradient(160deg, #d8e2f0 0%, #bfcfe4 100%);
+  --mk-frame-border: rgba(13, 27, 47, 0.16);
+  --mk-chrome:       rgba(13, 27, 47, 0.58);
 
-  --toast-bg:      #fafafa;
-  --toast-border:  #dfa45f;
-  --toast-fg:      #1a1a1a;
-  --toast-sub:     #5a5a5a;
-  --toast-track:   #e4e4e4;
+  --toast-bg:      #ffffff;
+  --toast-border:  #d08c27;
+  --toast-fg:      #14181d;
+  --toast-sub:     #5a6472;
+  --toast-track:   #dde3ea;
   --toast-fill:    #1273d4;
-  --toast-shadow:  0 10px 30px -12px rgba(13, 27, 47, 0.35);
+  --toast-shadow:  0 10px 30px -12px rgba(13, 27, 47, 0.40);
 }
 
 :root[data-theme="dark"] {
