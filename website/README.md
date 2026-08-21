@@ -42,6 +42,24 @@ rather than opening the files directly.
 
 Every push to `main` redeploys automatically.
 
+## Analytics
+
+Each page loads Vercel Web Analytics from `/_vercel/insights/script.js`.
+
+**The script tag alone does nothing** — Analytics has to be switched on for the project
+first: Vercel dashboard → **Analytics** in the sidebar → **Enable**, then redeploy. Until
+then (and on any local preview) the request 404s harmlessly and the page is unaffected.
+
+Vercel also provisions a project-specific `/<unique-path>/script.js` route that survives
+ad blockers better than the `/_vercel/` one. If the dashboard shows that path after you
+enable Analytics, swap it into all three HTML files.
+
+To confirm it's working, load a page and look for a `view` request in the Network tab.
+
+Speed Insights is the same pattern if you want it later —
+`<script defer src="/_vercel/speed-insights/script.js"></script>`, enabled separately in
+the dashboard.
+
 ## Caching
 
 `vercel.json` caches `/assets/img/*` for a year as `immutable`, but CSS and JS
