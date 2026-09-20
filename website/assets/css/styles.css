@@ -108,6 +108,13 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
 ::selection { background: var(--accent); color: #fff; }
 
+/* Visible keyboard focus ring — uses existing accent, works across all browsers. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 /* --- Typography ----------------------------------------------------------- */
 
 h1, h2, h3, h4 {
@@ -361,6 +368,14 @@ section { position: relative; }
   font-size: 0.82rem;
   color: var(--text-faint);
   margin-top: 16px;
+}
+
+/* Subtle trust strip below the hero CTAs */
+.hero-trust {
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  margin-top: 18px;
+  letter-spacing: 0.01em;
 }
 
 /* --- Hero ----------------------------------------------------------------- */

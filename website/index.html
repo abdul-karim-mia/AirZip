@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AirZip | Free Archive Extractor for Windows</title>
+<title>AirZip — Free Archive Extractor for Windows</title>
 <meta name="description" content="Free, open-source archive extractor for Windows. One 2.1 MB app that unzips ZIP, 7z, RAR, TAR and more instantly. No ads, no accounts, no telemetry.">
 <link rel="canonical" href="https://airzip.vercel.app/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AirZip">
 <meta property="og:url" content="https://airzip.vercel.app/">
-<meta property="og:title" content="AirZip | Free Archive Extractor for Windows">
+<meta property="og:title" content="AirZip — Free Archive Extractor for Windows">
 <meta property="og:description" content="Unzip like a Mac, on Windows. A single 2.1 MB app that extracts ZIP, 7z, RAR, TAR and more, instantly and completely free.">
 <meta property="og:image" content="https://airzip.vercel.app/assets/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="AirZip | unzip like a Mac, on Windows">
+<meta property="og:image:alt" content="AirZip — Unzip like a Mac. On Windows.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="AirZip | Free Archive Extractor for Windows">
+<meta name="twitter:title" content="AirZip — Free Archive Extractor for Windows">
 <meta name="twitter:description" content="Unzip like a Mac, on Windows. A single 2.1 MB app that extracts ZIP, 7z, RAR, TAR and more, instantly and completely free.">
 <meta name="twitter:image" content="https://airzip.vercel.app/assets/img/og.png">
 
@@ -113,7 +113,9 @@
         </a>
       </div>
 
-      <p class="btn-note" data-anim style="animation-delay:.34s">
+      <p class="hero-trust" data-anim style="animation-delay:.32s">Free &middot; Open Source &middot; No Telemetry &middot; Works Offline &middot; 2.1&nbsp;MB</p>
+
+      <p class="btn-note" data-anim style="animation-delay:.38s">
         <span data-release-meta>Version 1.0.0 | 2.1 MB</span> | Windows 10 1809 or newer | x64
       </p>
     </div>
@@ -146,7 +148,7 @@
   <div class="stats" data-reveal>
     <div class="stat"><b><span data-count="2.1" data-suffix=" MB">2.1 MB</span></b><span>Single executable</span></div>
     <div class="stat"><b><span data-count="12" data-suffix="">12</span></b><span>Archive formats</span></div>
-    <div class="stat"><b><span data-count="0" data-suffix="">0</span></b><span>Runtime dependencies</span></div>
+    <div class="stat"><b><span data-count="0" data-suffix="">0</span></b><span>Runtimes to install</span></div>
     <div class="stat"><b><span data-count="0" data-suffix="">0</span></b><span>Bytes of telemetry</span></div>
   </div>
 </section>
@@ -789,6 +791,22 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Windows 10 version 1809 (October 2018) and newer, including Windows 11, on x64."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does AirZip focus on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Extraction, done exceptionally well. AirZip is a dedicated unpacker: pointing it at an archive and getting the files out is the one job it does, and keeping that scope tight is exactly what keeps it at 2.1 MB and instant to launch. It sits happily alongside whatever else you use, so nothing in your existing workflow has to change."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is 7z.dll unpacked into my Temp folder?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The 7-Zip engine is embedded inside the executable as a resource so the download stays a single file. On first run it is written to %TEMP%\\AirZip and loaded from there. That is what lets AirZip be one portable exe rather than a folder of files."
           }
         }
       ]
