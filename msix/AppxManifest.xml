@@ -9,7 +9,7 @@
   <Identity
     Name="Sonarchalunfalnapurnewmas.AirZip"
     Publisher="CN=70B0DB70-8EB7-417C-BD78-E45B21717ADC"
-    Version="1.0.0.0"
+    Version="1.1.0.0"
     ProcessorArchitecture="x64" />
 
   <Properties>

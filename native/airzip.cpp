@@ -355,6 +355,7 @@ static HBRUSH       g_surfaceBrush = NULL; // edit-field background
 static std::wstring g_archive;
 static std::wstring g_error;
 static std::wstring g_outName;   // folder the archive landed in, shown on completion
+static std::wstring g_outTarget; // item to select in Explorer (folder or single extracted item)
 static std::wstring g_curFile;   // entry currently being written
 static UInt64       g_bytesDone  = 0;
 static UInt64       g_bytesTotal = 0;
@@ -430,6 +431,15 @@ static void ApplyDarkTitleBar(HWND hwnd) {
 // Ask the common controls to render with their dark variants.
 static void ApplyControlTheme(HWND ctl, bool isEdit) {
     SetWindowTheme(ctl, g_light ? NULL : (isEdit ? L"DarkMode_CFD" : L"DarkMode_Explorer"), NULL);
+}
+
+static void RevealInExplorer(const std::wstring &path) {
+    if (path.empty()) return;
+    PIDLIST_ABSOLUTE pidl = ILCreateFromPathW(path.c_str());
+    if (pidl) {
+        SHOpenFolderAndSelectItems(pidl, 0, NULL, 0);
+        ILFree(pidl);
+    }
 }
 
 // Completion chime. Playing the system event by ALIAS is what makes this follow
@@ -1065,6 +1075,7 @@ static bool ExtractArchive(const std::wstring &archivePath, std::wstring &error)
 
     // Smart folder: how many distinct items sit at the archive root?
     std::set<std::wstring> roots;
+    std::wstring singleRootName;
     for (UInt32 i = 0; i < count && roots.size() < 2; ++i) {
         PROPVARIANT prop;
         PropVariantInit(&prop);
@@ -1076,13 +1087,18 @@ static bool ExtractArchive(const std::wstring &archivePath, std::wstring &error)
         if (p.empty()) p = fallbackName;   // counts as one root, not zero
         size_t cut = p.find_first_of(L"\\/");
         std::wstring root = (cut == std::wstring::npos) ? p : p.substr(0, cut);
-        if (!root.empty()) roots.insert(Lower(root));
+        if (!root.empty()) {
+            if (roots.empty()) singleRootName = root;
+            roots.insert(Lower(root));
+        }
     }
 
     std::wstring parent = DirOf(archivePath);
     std::wstring outDir;
+    std::wstring targetPath;
     if (roots.size() == 1) {
         outDir = parent;
+        targetPath = Join(parent, singleRootName);
     } else {
         // Strip the volume suffix and then the format suffix: rand.7z.001 -> rand
         std::wstring stem = StripExt(BaseOf(archivePath));
@@ -1095,10 +1111,12 @@ static bool ExtractArchive(const std::wstring &archivePath, std::wstring &error)
         }
         if (stem.empty()) stem = L"Extracted";
         outDir = Join(parent, stem);
+        targetPath = outDir;
         MakeDirs(outDir);
     }
 
     g_outName = BaseOf(outDir);
+    g_outTarget = targetPath;
     SetStatus(L"Extracting to " + g_outName + L"...");
 
     ExtractCallback *cb = new ExtractCallback(archive, outDir, fallbackName);
@@ -1583,6 +1601,7 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
         KillTimer(hwnd, TIMER_SHOW);
         if (wp) {
             PlayDoneSound();
+            RevealInExplorer(g_outTarget);
             if (g_shown) {
                 // Hold a finished frame briefly so completion is actually seen.
                 g_percent = 100;
@@ -1849,7 +1868,7 @@ static void RegisterUninstallEntry(const std::wstring &targetDir, const std::wst
     std::wstring quiet     = L"\"" + targetExe + L"\" --silent-uninstall";
 
     SetRegValue(HKEY_LOCAL_MACHINE, AZ_UNINST_KEY, L"DisplayName",          L"AirZip");
-    SetRegValue(HKEY_LOCAL_MACHINE, AZ_UNINST_KEY, L"DisplayVersion",       L"1.0.0.0");
+    SetRegValue(HKEY_LOCAL_MACHINE, AZ_UNINST_KEY, L"DisplayVersion",       L"1.1.0.0");
     SetRegValue(HKEY_LOCAL_MACHINE, AZ_UNINST_KEY, L"Publisher",            L"AirZip");
     SetRegValue(HKEY_LOCAL_MACHINE, AZ_UNINST_KEY, L"DisplayIcon",          icon.c_str());
     SetRegValue(HKEY_LOCAL_MACHINE, AZ_UNINST_KEY, L"UninstallString",      uninst.c_str());
@@ -2131,8 +2150,8 @@ int WINAPI wWinMain(HINSTANCE inst, HINSTANCE, LPWSTR, int) {
                                L"to see the available options.",
                          L"AirZip", MB_OK | MB_ICONINFORMATION);
     } else if (_wcsicmp(cmd, L"--version") == 0) {
-        if (g_cli) Emit(L"\nAirZip 1.0.0.0\n");
-        else MessageBoxW(NULL, L"AirZip 1.0.0.0", L"AirZip", MB_OK | MB_ICONINFORMATION);
+        if (g_cli) Emit(L"\nAirZip 1.1.0.0\n");
+        else MessageBoxW(NULL, L"AirZip 1.1.0.0", L"AirZip", MB_OK | MB_ICONINFORMATION);
     } else if (_wcsicmp(cmd, L"--install") == 0 || _wcsicmp(cmd, L"--silent-install") == 0) {
         bool silent = _wcsicmp(cmd, L"--silent-install") == 0;
         if (packaged) {

@@ -70,6 +70,10 @@ source file, because the archive already did the organising. Several loose root 
 AirZip creates a folder named after the archive. No Downloads-folder explosion, and no
 pointless `foo/foo/foo` nesting.
 
+**Instant Explorer reveal & selection.** Once extraction completes, AirZip automatically
+focuses or opens File Explorer and highlights the extracted item, so you can start working
+with your files right away without hunting for them.
+
 **Multi-volume support.** Hand it `backup.7z.001` and it finds `.002`, `.003` and the rest,
 then streams them as one continuous file through a spanning stream. Progress reflects the
 whole set, not one volume.

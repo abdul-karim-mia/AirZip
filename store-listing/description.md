@@ -14,6 +14,7 @@ We built it because most archive tools make you wait through a big install, or b
 
 **What makes it easy to live with:**
 - Smart unpacking — one file inside? It lands right next to the archive. Several files? AirZip makes a neat folder for them. No digging through nested folders.
+- Automatic Explorer reveal — instantly opens or focuses File Explorer with your extracted files selected and ready to go.
 - Handles split archives (.7z.001, .7z.002...) as if they were one file
 - Follows your Windows light/dark theme automatically, even if you switch themes mid-extraction
 - While extracting, you see exactly what's happening — current file, percent done, and how much has copied
