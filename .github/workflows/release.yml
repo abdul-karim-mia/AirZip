@@ -1,0 +1,70 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build & Sign AirZip
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Build AirZip binary
+        shell: cmd
+        run: |
+          cd native
+          build.cmd
+
+      - name: Prepare artifact for SignPath
+        shell: pwsh
+        run: |
+          Compress-Archive -Path "native\out\AirZip.exe" -DestinationPath "AirZip-unsigned.zip"
+
+      - name: Submit signing request to SignPath
+        if: env.SIGNPATH_API_TOKEN != ''
+        id: signpath
+        uses: SignPath/github-action-submit-signing-request@v2
+        env:
+          SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG || 'AirZip' }}
+          signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG || 'release-signing' }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-for-completion: true
+          output-artifact-directory: "signed-output"
+          parameters: |
+            input-artifact-path: AirZip-unsigned.zip
+
+      - name: Extract signed artifact
+        if: env.SIGNPATH_API_TOKEN != ''
+        shell: pwsh
+        env:
+          SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+        run: |
+          Expand-Archive -Path "signed-output\*.zip" -DestinationPath "native\out" -Force
+
+      - name: Compute SHA256 checksum
+        shell: pwsh
+        run: |
+          $hash = (Get-FileHash native\out\AirZip.exe -Algorithm SHA256).Hash
+          echo "AIRZIP_SHA256=$hash" >> $env:GITHUB_ENV
+          Write-Host "SHA256: $hash"
+
+      - name: Upload binary to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: native/out/AirZip.exe
